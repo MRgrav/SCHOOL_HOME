@@ -5,38 +5,6 @@ import AppLogoIcon from './AppLogoIcon.vue';
 import { MapPin, Phone, Mail } from 'lucide-vue-next';
 
 // Quick navigation items
-const QuickLinks: NavItem[] = [
-    {
-        title: 'About Us',
-        href: '/about',
-    },
-    {
-        title: 'School Magazine',
-        href: '/magazine',
-    },
-    {
-        title: 'News & Events',
-        href: '/news-events',
-    },
-    {
-        title: 'Admission',
-        href: '/admission',
-    },
-    {
-        title: 'Activities',
-        href: '/activities',
-    },
-    {
-        title: 'Faculty',
-        href: '/faculty',
-    },
-    {
-        title: 'Staff',
-        href: '/staff',
-    },
-];
-
-// Quick navigation items
 const QuickLinksItems: NavItem[] = [
     {
         title: 'About Us',
@@ -132,7 +100,7 @@ const AddressItems: NavItem[] = [
             </div>
             <div class="flex flex-col items-center md:items-start">
                 <h4 class="text-white mb-3">Quick Links</h4>
-                <Link class="pb-1 small relative after:bg-gray-300 after:absolute after:h-[1.5px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer w-fit" v-for="item in QuickLinks" :key="item.title" :href="item.href">{{ item.title }}</Link>
+                <Link class="pb-1 small relative after:bg-gray-300 after:absolute after:h-[1.5px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300 cursor-pointer w-fit" v-for="item in QuickLinksItems" :key="item.title" :href="item.href">{{ item.title }}</Link>
             </div>
             <div class="flex flex-col items-center md:items-start">
                 <h4 class="text-white mb-3">Information</h4>
