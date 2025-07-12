@@ -13,7 +13,15 @@ import { getInitials } from '@/composables/useInitials';
 import type { BreadcrumbItem, NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-vue-next';
-import { computed } from 'vue';
+import { computed, h } from 'vue';
+import NavigationMenuTrigger from './ui/navigation-menu/NavigationMenuTrigger.vue';
+import NavigationMenuContent from './ui/navigation-menu/NavigationMenuContent.vue';
+import NavigationMenuLink from './ui/navigation-menu/NavigationMenuLink.vue';
+import Infobar from './Infobar.vue';
+import Accordion from './ui/accordion/Accordion.vue';
+import { AccordionContent } from 'reka-ui';
+import AccordionTrigger from './ui/accordion/AccordionTrigger.vue';
+import AccordionItem from './ui/accordion/AccordionItem.vue';
 
 interface Props {
     breadcrumbs?: BreadcrumbItem[];
@@ -40,6 +48,165 @@ const mainNavItems: NavItem[] = [
     },
 ];
 
+// Academic navigation items
+const AcademicItems: NavItem[] = [
+    {
+        title: 'Academic Calendar',
+        href: '/academic-calendar',
+    },
+    {
+        title: 'Holiday List',
+        href: '/holiday-list',
+    },
+    {
+        title: 'School Timing',
+        href: '/school-timing',
+    },
+    {
+        title: 'School Uniform',
+        href: '/school-uniform',
+    },
+    {
+        title: 'List of Books',
+        href: '/list-of-books',
+    },
+    {
+        title: 'Subjects Offered',
+        href: '/subjects-offered',
+    },
+];
+
+// Non-Academic navigation items
+const NonAcademicItems: NavItem[] = [
+    {
+        title: 'News & Events',
+        href: '/news-and-events',
+    },
+    {
+        title: 'Calendar for Sports/Co-curricular activities',
+        href: '/sports-calendar',
+    },
+    {
+        title: 'NCC',
+        href: '/ncc',
+    },
+];
+
+const AdmissionItems: NavItem[] = [
+    {
+        title: 'Online Registration Process',
+        href: '/online-registration-process',
+    },
+    {
+        title: 'Admission Procedure',
+        href: '/admission-procedure',
+    },
+    {
+        title: 'Fees Structure',
+        href: '/fees-structure',
+    },
+    {
+        title: 'Testimonials',
+        href: '/testimonials',
+    },
+    {
+        title: 'Office Remittances',
+        href: '/office-remittances',
+    },
+    {
+        title: 'Transfer Certificate',
+        href: '/transfer-certificate',
+    },
+    {
+        title: 'Orientation Program',
+        href: '/orientation-program',
+    },
+    {
+        title: 'Age Limits',
+        href: '/age-limits',
+    },
+];
+
+const InfrastructureItems: NavItem[] = [
+    {
+        title: 'Classrooms',
+        href: '/classrooms',
+    },
+    {
+        title: 'Library',
+        href: '/library',
+    },
+
+    {
+        title: 'Playground Sports',
+        href: '/playground-sports',
+    },
+    {
+        title: 'Creative & Performing Arts',
+        href: '/creative-performing-arts',
+    },
+    {
+        title: 'Medical Care',
+        href: '/medical-care',
+    },
+];
+
+const AchievementsItems: NavItem[] = [
+    {
+        title: 'Academic Achievements',
+        href: '/academic-achievements',
+    },
+];
+
+const ActivitiesItems: NavItem[] = [
+    {
+        title: 'Sports',
+        href: '/sports',
+    },
+];
+
+const HouseItems: NavItem[] = [
+    {
+        title: 'Gandhi House',
+        href: '/house/gandhi',
+    },
+    {
+        title: 'Nehru House',
+        href: '/house/nehru',
+    },
+    {
+        title: 'Subhash House',
+        href: '/house/subhash',
+    },
+    {
+        title: 'Tagore House',
+        href: '/house/tagore',
+    },
+
+];
+
+const LaboratoryItems: NavItem[] = [
+    {
+        title: 'Computer Lab',
+        href: '/laboratory/computer',
+    },
+    {
+        title: 'Physics Lab',
+        href: '/laboratory/physics',
+    },
+    {
+        title: 'Chemistry Lab',
+        href: '/laboratory/chemistry',
+    },
+    {
+        title: 'Biology Lab',
+        href: '/laboratory/biology',
+    },
+
+];
+
+
+
 const rightNavItems: NavItem[] = [
     {
         title: 'Repository',
@@ -55,132 +222,352 @@ const rightNavItems: NavItem[] = [
 </script>
 
 <template>
+    <Infobar/>
     <div>
         <div class="border-b border-sidebar-border/80">
+
             <div class="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
+
+                <Link :href="route('dashboard')" class="flex items-center gap-x-2">
+                    <AppLogo />
+                </Link>
+
                 <!-- Mobile Menu -->
-                <div class="lg:hidden">
+                <div class="ml-auto lg:hidden">
                     <Sheet>
                         <SheetTrigger :as-child="true">
                             <Button variant="ghost" size="icon" class="mr-2 h-9 w-9">
                                 <Menu class="h-5 w-5" />
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="left" class="w-[300px] p-6">
-                            <SheetTitle class="sr-only">Navigation Menu</SheetTitle>
-                            <SheetHeader class="flex justify-start text-left">
-                                <AppLogoIcon class="size-6 fill-current text-black dark:text-white" />
-                            </SheetHeader>
-                            <div class="flex h-full flex-1 flex-col justify-between space-y-4 py-6">
-                                <nav class="-mx-3 space-y-1">
-                                    <Link
-                                        v-for="item in mainNavItems"
-                                        :key="item.title"
-                                        :href="item.href"
-                                        class="flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent"
-                                        :class="activeItemStyles(item.href)"
-                                    >
-                                        <component v-if="item.icon" :is="item.icon" class="h-5 w-5" />
-                                        {{ item.title }}
-                                    </Link>
-                                </nav>
-                                <div class="flex flex-col space-y-4">
-                                    <a
-                                        v-for="item in rightNavItems"
-                                        :key="item.title"
-                                        :href="item.href"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="flex items-center space-x-2 text-sm font-medium"
-                                    >
-                                        <component v-if="item.icon" :is="item.icon" class="h-5 w-5" />
-                                        <span>{{ item.title }}</span>
-                                    </a>
-                                </div>
-                            </div>
+                        <SheetContent side="right" class="w-[300px] p-10 pt-20">
+                            <Accordion type="single" class="w-full" collapsible>
+
+                                <NavigationMenuLink :href="'/'" class="block font-['Poppins'] font-semibold px-2 py-4 hover:underline"><span class="">Home</span></NavigationMenuLink>
+                                <!-- Divider line between sections-->
+                                <hr class="border-t-1 border-gray-200 dark:border-gray-700" />
+
+                                <AccordionItem :value="'Academic'" class="hover:bg-gray-100 px-2">
+                                    <AccordionTrigger> <span class="font-semibold">Academic</span></AccordionTrigger>
+                                    <AccordionContent v-for="item in AcademicItems" :key="item.title">
+                                        <NavigationMenuLink :href="item.href" class="hover:underline p">
+                                            {{ item.title }}
+                                        </NavigationMenuLink>
+                                    </AccordionContent>
+                                </AccordionItem>
+
+                                <AccordionItem :value="'Non Academic'" class="hover:bg-gray-100 px-2">
+                                    <AccordionTrigger> <span class="font-semibold">Non Academic</span></AccordionTrigger>
+                                    <AccordionContent v-for="item in NonAcademicItems" :key="item.title">
+                                        <NavigationMenuLink :href="item.href" class="hover:underline p">
+                                            {{ item.title }}
+                                        </NavigationMenuLink>
+                                    </AccordionContent>
+                                </AccordionItem>
+
+                                <AccordionItem :value="'Admission'" class="hover:bg-gray-100 px-2">
+                                    <AccordionTrigger> <span class="font-semibold">Admission</span></AccordionTrigger>
+                                    <AccordionContent v-for="item in AdmissionItems" :key="item.title">
+                                        <NavigationMenuLink :href="item.href" class="hover:underline p">
+                                            {{ item.title }}
+                                        </NavigationMenuLink>
+                                    </AccordionContent>
+                                </AccordionItem>
+
+                                <AccordionItem :value="'Infrastructure'" class="hover:bg-gray-100 px-2">
+                                    <AccordionTrigger> <span class="font-semibold">Infrastructure</span></AccordionTrigger>
+                                    <AccordionContent>
+                                        <div class=" whitespace-nowrap">
+                                            <div class="nav-link p-3 pt-3 font-semibold uppercase text-muted-foreground tracking-wide">
+                                                Laboratory
+                                            </div>
+                                            <!-- Divider line between sections-->
+                                            <hr class="border-t border-gray-200 dark:border-gray-700" />
+
+                                            <ul class="w-max">
+                                                <li v-for="items in LaboratoryItems" :key="items.title">
+                                                <NavigationMenuLink as-child>
+                                                    <a
+                                                    :href="items.href"
+                                                    class="block select-none rounded-md py-2 px-6 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                                    >
+                                                    <div class="py-1 hover:underline">{{ items.title }}</div>
+                                                    </a>
+                                                </NavigationMenuLink>
+                                                </li>
+                                            </ul>
+                                            <!-- Divider line between sections-->
+                                            <hr class="border-t border-gray-200 dark:border-gray-700 mb-2" />
+                                        </div>
+                                    </AccordionContent>
+                                    <AccordionContent v-for="item in InfrastructureItems" :key="item.title">
+                                        <NavigationMenuLink :href="item.href" class="hover:underline p">
+                                            {{ item.title }}
+                                        </NavigationMenuLink>
+                                    </AccordionContent>
+                                </AccordionItem>
+
+                                <AccordionItem :value="'Activities'" class="hover:bg-gray-100 px-2">
+                                    <AccordionTrigger> <span class="font-semibold">Activities</span></AccordionTrigger>
+                                    <AccordionContent>
+                                        <div class=" whitespace-nowrap">
+                                            <div class="nav-link p-3 pt-3 font-semibold uppercase text-muted-foreground tracking-wide">
+                                                House
+                                            </div>
+                                            <!-- Divider line between sections-->
+                                            <hr class="border-t border-gray-200 dark:border-gray-700" />
+
+                                            <ul class="w-max">
+                                                <li v-for="items in HouseItems" :key="items.title">
+                                                <NavigationMenuLink as-child>
+                                                    <a
+                                                    :href="items.href"
+                                                    class="block select-none rounded-md py-2 px-6 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                                    >
+                                                    <div class="py-1 hover:underline">{{ items.title }}</div>
+                                                    </a>
+                                                </NavigationMenuLink>
+                                                </li>
+                                            </ul>
+                                            <!-- Divider line between sections-->
+                                            <hr class="border-t border-gray-200 dark:border-gray-700 mb-2" />
+                                        </div>
+                                    </AccordionContent>
+                                    <AccordionContent v-for="item in ActivitiesItems" :key="item.title">
+                                        <NavigationMenuLink :href="item.href" class="hover:underline p">
+                                            {{ item.title }}
+                                        </NavigationMenuLink>
+                                    </AccordionContent>
+                                </AccordionItem>
+
+                                <AccordionItem :value="'Achievements'" class="hover:bg-gray-100 px-2">
+                                    <AccordionTrigger> <span class="font-semibold">Achievements</span></AccordionTrigger>
+                                    <AccordionContent v-for="item in AchievementsItems" :key="item.title">
+                                        <NavigationMenuLink :href="item.href" class="hover:underline p">
+                                            {{ item.title }}
+                                        </NavigationMenuLink>
+                                    </AccordionContent>
+                                </AccordionItem>
+
+                                <NavigationMenuLink :href="'/notifications'" class="block font-['Poppins'] font-semibold px-2 py-4 hover:underline"><span class="">Notifications</span></NavigationMenuLink>
+
+                            </Accordion>
                         </SheetContent>
                     </Sheet>
                 </div>
 
-                <Link :href="route('dashboard')" class="flex items-center gap-x-2">
-                    <AppLogo />
-                </Link>
-
                 <!-- Desktop Menu -->
-                <div class="hidden h-full lg:flex lg:flex-1">
-                    <NavigationMenu class="ml-10 flex h-full items-stretch">
-                        <NavigationMenuList class="flex h-full items-stretch space-x-2">
-                            <NavigationMenuItem v-for="(item, index) in mainNavItems" :key="index" class="relative flex h-full items-center">
-                                <Link
-                                    :class="[navigationMenuTriggerStyle(), activeItemStyles(item.href), 'h-9 cursor-pointer px-3']"
-                                    :href="item.href"
-                                >
-                                    <component v-if="item.icon" :is="item.icon" class="mr-2 h-4 w-4" />
-                                    {{ item.title }}
-                                </Link>
-                                <div
-                                    v-if="isCurrentRoute(item.href)"
-                                    class="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"
-                                ></div>
+                <div class="hidden lg:flex items-center ml-auto">
+                    <NavigationMenu >
+                        <NavigationMenuList >
+                            <NavigationMenuItem>
+                                <NavigationMenuLink href="/" :class="navigationMenuTriggerStyle()">
+                                    <span class="nav-link">Home</span>
+                                </NavigationMenuLink>
                             </NavigationMenuItem>
                         </NavigationMenuList>
                     </NavigationMenu>
-                </div>
 
-                <div class="ml-auto flex items-center space-x-2">
-                    <div class="relative flex items-center space-x-1">
-                        <Button variant="ghost" size="icon" class="group h-9 w-9 cursor-pointer">
-                            <Search class="size-5 opacity-80 group-hover:opacity-100" />
-                        </Button>
+                    <NavigationMenu>
+                        <NavigationMenuList>
+                            <NavigationMenuItem>
+                                <NavigationMenuTrigger> <span class="nav-link">Academic</span></NavigationMenuTrigger>
+                                <NavigationMenuContent>
+                                <ul class="w-max">
+                                    <li v-for="items in AcademicItems" :key="items.title">
+                                    <NavigationMenuLink as-child>
+                                        <a
+                                        :href="items.href"
+                                        class="small select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                        >
+                                        <div class="nav-link">{{ items.title }}</div>
+                                        </a>
+                                    </NavigationMenuLink>
+                                    </li>
+                                </ul>
+                                </NavigationMenuContent>
+                            </NavigationMenuItem>
+                        </NavigationMenuList>
+                    </NavigationMenu>
 
-                        <div class="hidden space-x-1 lg:flex">
-                            <template v-for="item in rightNavItems" :key="item.title">
-                                <TooltipProvider :delay-duration="0">
-                                    <Tooltip>
-                                        <TooltipTrigger>
-                                            <Button variant="ghost" size="icon" as-child class="group h-9 w-9 cursor-pointer">
-                                                <a :href="item.href" target="_blank" rel="noopener noreferrer">
-                                                    <span class="sr-only">{{ item.title }}</span>
-                                                    <component :is="item.icon" class="size-5 opacity-80 group-hover:opacity-100" />
+                    <NavigationMenu>
+                        <NavigationMenuList>
+                            <NavigationMenuItem>
+                                <NavigationMenuTrigger> <span class="nav-link">Non Academic</span></NavigationMenuTrigger>
+                                <NavigationMenuContent>
+                                <ul class="w-max">
+                                    <li v-for="items in NonAcademicItems" :key="items.title">
+                                    <NavigationMenuLink as-child>
+                                        <a
+                                        :href="items.href"
+                                        class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                        >
+                                        <div class="nav-link">{{ items.title }}</div>
+                                        </a>
+                                    </NavigationMenuLink>
+                                    </li>
+                                </ul>
+                                </NavigationMenuContent>
+                            </NavigationMenuItem>
+                        </NavigationMenuList>
+                    </NavigationMenu>
+
+                    <NavigationMenu>
+                        <NavigationMenuList>
+                            <NavigationMenuItem>
+                                <NavigationMenuTrigger> <span class="nav-link">Admission</span></NavigationMenuTrigger>
+                                <NavigationMenuContent>
+                                <ul class="w-max">
+                                    <li v-for="items in AdmissionItems" :key="items.title">
+                                    <NavigationMenuLink as-child>
+                                        <a
+                                        :href="items.href"
+                                        class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                        >
+                                        <div class="nav-link">{{ items.title }}</div>
+                                        </a>
+                                    </NavigationMenuLink>
+                                    </li>
+                                </ul>
+                                </NavigationMenuContent>
+                            </NavigationMenuItem>
+                        </NavigationMenuList>
+                    </NavigationMenu>
+
+                    <NavigationMenu>
+                        <NavigationMenuList>
+                            <NavigationMenuItem>
+                                <NavigationMenuTrigger> <span class="nav-link">Infrastructure</span></NavigationMenuTrigger>
+                                <NavigationMenuContent>
+                                    <!-- Grouped Subsection -->
+                                    <div class="space-y-1 whitespace-nowrap">
+                                        <div class="nav-link p-3 pt-3 font-semibold uppercase text-muted-foreground tracking-wide">
+                                            Laboratory
+                                        </div>
+                                        <!-- Divider line between sections-->
+                                        <hr class="border-t border-gray-100 dark:border-gray-700" />
+
+                                        <ul class="w-max">
+                                            <li v-for="items in LaboratoryItems" :key="items.title">
+                                            <NavigationMenuLink as-child>
+                                                <a
+                                                :href="items.href"
+                                                class="block select-none space-y-1 rounded-md py-3 px-6 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                                >
+                                                <div class="nav-link">{{ items.title }}</div>
                                                 </a>
-                                            </Button>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>{{ item.title }}</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
-                            </template>
-                        </div>
-                    </div>
+                                            </NavigationMenuLink>
+                                            </li>
+                                        </ul>
+                                        <!-- Divider line between sections-->
+                                        <hr class="border-t border-gray-100 dark:border-gray-700" />
+                                    </div>
 
-                    <DropdownMenu>
-                        <DropdownMenuTrigger :as-child="true">
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                class="relative size-10 w-auto rounded-full p-1 focus-within:ring-2 focus-within:ring-primary"
-                            >
-                                <Avatar class="size-8 overflow-hidden rounded-full">
-                                    <AvatarImage v-if="auth.user.avatar" :src="auth.user.avatar" :alt="auth.user.name" />
-                                    <AvatarFallback class="rounded-lg bg-neutral-200 font-semibold text-black dark:bg-neutral-700 dark:text-white">
-                                        {{ getInitials(auth.user?.name) }}
-                                    </AvatarFallback>
-                                </Avatar>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" class="w-56">
-                            <UserMenuContent :user="auth.user" />
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                                    <ul class="w-max">
+                                        <li v-for="items in InfrastructureItems" :key="items.title">
+                                        <NavigationMenuLink as-child>
+                                            <a
+                                            :href="items.href"
+                                            class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                            >
+                                            <div class="nav-link">{{ items.title }}</div>
+                                            </a>
+                                        </NavigationMenuLink>
+                                        </li>
+                                    </ul>
+                                </NavigationMenuContent>
+                            </NavigationMenuItem>
+                        </NavigationMenuList>
+                    </NavigationMenu>
+
+                    <NavigationMenu>
+                        <NavigationMenuList>
+                            <NavigationMenuItem>
+                            <NavigationMenuTrigger> <span class="nav-link">Activities</span></NavigationMenuTrigger>
+                            <NavigationMenuContent class="w-max whitewrap-nowrap">
+
+                                <!-- Grouped Subsection -->
+                                <div class="space-y-1 whitespace-nowrap">
+                                    <div class=" p-3 py-3 font-semibold uppercase text-muted-foreground tracking-wide nav-link">
+                                        Houses
+                                    </div>
+                                    <!-- Divider line between Activities and Houses -->
+                                    <hr class="border-t border-gray-100 dark:border-gray-700" />
+
+                                    <ul class="w-max">
+                                        <li v-for="items in HouseItems" :key="items.title">
+                                        <NavigationMenuLink as-child>
+                                            <a
+                                            :href="items.href"
+                                            class="block select-none space-y-1 rounded-md py-3 px-6 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                            >
+                                            <div class="nav-link">{{ items.title }}</div>
+                                            </a>
+                                        </NavigationMenuLink>
+                                        </li>
+                                    </ul>
+                                    <!-- Divider line between sections-->
+                                    <hr class="border-t border-gray-100 dark:border-gray-700" />
+                                    </div>
+                                        <ul class="w-full">
+                                        <li v-for="items in ActivitiesItems" :key="items.title">
+                                        <NavigationMenuLink as-child>
+                                            <a
+                                            :href="items.href"
+                                            class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                            >
+                                            <div class="nav-link">{{ items.title }}</div>
+                                            </a>
+                                        </NavigationMenuLink>
+                                        </li>
+                                    </ul>
+
+                            </NavigationMenuContent>
+                            </NavigationMenuItem>
+                        </NavigationMenuList>
+                    </NavigationMenu>
+
+
+                    <NavigationMenu>
+                        <NavigationMenuList>
+                            <NavigationMenuItem>
+                                <NavigationMenuTrigger> <span class="nav-link">Achievements</span></NavigationMenuTrigger>
+                                <NavigationMenuContent>
+                                <ul class="w-max">
+                                    <li v-for="items in AchievementsItems" :key="items.title">
+                                    <NavigationMenuLink as-child>
+                                        <a
+                                        :href="items.href"
+                                        class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                        >
+                                        <div class="nav-link">{{ items.title }}</div>
+                                        </a>
+                                    </NavigationMenuLink>
+                                    </li>
+                                </ul>
+                                </NavigationMenuContent>
+                            </NavigationMenuItem>
+                        </NavigationMenuList>
+                    </NavigationMenu>
+
+                    <NavigationMenu>
+                        <NavigationMenuList >
+                            <NavigationMenuItem>
+                                <NavigationMenuLink href="/notifications" :class="navigationMenuTriggerStyle()">
+                                     <span class="nav-link">Notifications</span>
+                                </NavigationMenuLink>
+                            </NavigationMenuItem>
+                        </NavigationMenuList>
+                    </NavigationMenu>
+
                 </div>
             </div>
-        </div>
+        </div>  
 
-        <div v-if="props.breadcrumbs.length > 1" class="flex w-full border-b border-sidebar-border/70">
+        <!-- <div v-if="props.breadcrumbs.length > 1" class="flex w-full border-b border-sidebar-border/70">
             <div class="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
                 <Breadcrumbs :breadcrumbs="breadcrumbs" />
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
