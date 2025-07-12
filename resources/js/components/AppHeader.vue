@@ -224,11 +224,11 @@ const rightNavItems: NavItem[] = [
 <template>
     <Infobar/>
     <div>
-        <div class="border-b border-sidebar-border/80">
+        <div>
 
-            <div class="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
+            <div class="flex items-center px-4 md:px-10 py-2">
 
-                <Link :href="route('dashboard')" class="flex items-center gap-x-2">
+                <Link :href="route('dashboard')" class="flex items-center gap-x-3 w-full lg:w-fit">
                     <AppLogo />
                 </Link>
 
