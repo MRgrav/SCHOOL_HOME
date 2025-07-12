@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppLogo from '@/components/AppLogo.vue';
-import { Button } from '@/components/ui/button';
+// import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Link } from '@inertiajs/vue3';
@@ -14,6 +14,7 @@ import { AccordionContent } from 'reka-ui';
 import AccordionTrigger from './ui/accordion/AccordionTrigger.vue';
 import AccordionItem from './ui/accordion/AccordionItem.vue';
 import { NavItem } from '@/types';
+import { MenuIcon } from 'lucide-vue-next';
 
 
 // const page = usePage();
@@ -197,11 +198,9 @@ const LaboratoryItems: NavItem[] = [
         <div class="ml-auto lg:hidden">
             <Sheet>
                 <SheetTrigger :as-child="true">
-                    <Button variant="ghost" size="icon" class="mr-2 h-9 w-9">
-                        <Menu class="h-5 w-5" />
-                    </Button>
+                    <MenuIcon class="size-10 m-auto stroke-gray-600 hover:stroke-gray-900"/>
                 </SheetTrigger>
-                <SheetContent side="right" class="w-[300px] p-10 pt-20">
+                <SheetContent side="right" class="w-[300px] p-10 pt-20" >
                     <Accordion type="single" class="w-full" collapsible>
 
                         <NavigationMenuLink :href="'/'" class="block font-['Poppins'] font-semibold px-2 py-4 hover:underline"><span class="">Home</span></NavigationMenuLink>
