@@ -58,6 +58,8 @@
     --color-sidebar-ring: var(--sidebar-ring);
     --animate-accordion-down: accordion-down 0.2s ease-out;
     --animate-accordion-up: accordion-up 0.2s ease-out;
+
+    --primary-color: red;
   @keyframes accordion-down {
   from {
     height: 0;
@@ -137,6 +139,8 @@
     --sidebar-border: hsl(0 0% 91%);
     --sidebar-ring: hsl(217.2 91.2% 59.8%);
     --sidebar: hsl(0 0% 98%);
+
+    --primary-brand-500: #3d5cd8;
 }
 
 .dark {

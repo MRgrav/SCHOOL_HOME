@@ -5,7 +5,7 @@ import { Mail } from 'lucide-vue-next';
 </script>
 
 <template>
-    <div class="infobar flex flex-col md:flex-row gap-2 w-full bg-blue-500 flex justify-between p-3 caption md:small font-bold fill-white text-white align-center">
+    <div class="infobar flex flex-col md:flex-row gap-2 w-full bg-[var(--primary-brand-500))] flex justify-between p-3 caption md:small font-bold fill-white text-white align-center">
         <div class="left-infobar flex align-center">
             <div class="flex">
                 <span>
