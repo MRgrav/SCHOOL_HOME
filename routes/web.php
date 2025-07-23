@@ -2,10 +2,21 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\OnlineRegistrationController;
+use App\Http\Controllers\SumController;
+use App\Http\Controllers\SubstractController;
+
+
+Route::controller(OnlineRegistrationController::class)->group(function () {
+    Route::get("/online-registration", 'create')->name('online-registration.create');
+    Route::post("/online-registration", 'store')->name('online-registration.store');
+});
+
 
 Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
+
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
