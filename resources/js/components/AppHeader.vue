@@ -72,8 +72,8 @@ const NonAcademicItems: NavItem[] = [
 
 const AdmissionItems: NavItem[] = [
     {
-        title: 'Online Registration Process',
-        href: '/online-registration-process',
+        title: 'Online Registration',
+        href: '/online-registration',
     },
     {
         title: 'Admission Procedure',
@@ -247,12 +247,12 @@ const LaboratoryItems: NavItem[] = [
                                     <ul class="w-max">
                                         <li v-for="items in LaboratoryItems" :key="items.title">
                                         <NavigationMenuLink as-child>
-                                            <a
+                                            <Link
                                             :href="items.href"
                                             class="block select-none rounded-md py-2 px-6 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                             >
                                             <div class="py-1 hover:underline">{{ items.title }}</div>
-                                            </a>
+                                            </Link>
                                         </NavigationMenuLink>
                                         </li>
                                     </ul>
@@ -280,12 +280,12 @@ const LaboratoryItems: NavItem[] = [
                                     <ul class="w-max">
                                         <li v-for="items in HouseItems" :key="items.title">
                                         <NavigationMenuLink as-child>
-                                            <a
+                                            <Link
                                             :href="items.href"
                                             class="block select-none rounded-md py-2 px-6 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                             >
                                             <div class="py-1 hover:underline">{{ items.title }}</div>
-                                            </a>
+                                            </Link>
                                         </NavigationMenuLink>
                                         </li>
                                     </ul>
@@ -321,8 +321,8 @@ const LaboratoryItems: NavItem[] = [
             <NavigationMenu >
                 <NavigationMenuList >
                     <NavigationMenuItem>
-                        <NavigationMenuLink href="/" :class="navigationMenuTriggerStyle()">
-                            <span class="nav-link">Home</span>
+                        <NavigationMenuLink>
+                            <Link href="/" class="nav-link">Home</Link>
                         </NavigationMenuLink>
                     </NavigationMenuItem>
                 </NavigationMenuList>
@@ -336,12 +336,12 @@ const LaboratoryItems: NavItem[] = [
                         <ul class="w-max">
                             <li v-for="items in AcademicItems" :key="items.title">
                             <NavigationMenuLink as-child>
-                                <a
+                                <Link
                                 :href="items.href"
                                 class="small select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                 >
                                 <div class="nav-link">{{ items.title }}</div>
-                                </a>
+                                </Link>
                             </NavigationMenuLink>
                             </li>
                         </ul>
@@ -358,12 +358,12 @@ const LaboratoryItems: NavItem[] = [
                         <ul class="w-max">
                             <li v-for="items in NonAcademicItems" :key="items.title">
                             <NavigationMenuLink as-child>
-                                <a
+                                <Link
                                 :href="items.href"
                                 class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                 >
                                 <div class="nav-link">{{ items.title }}</div>
-                                </a>
+                                </Link>
                             </NavigationMenuLink>
                             </li>
                         </ul>
@@ -380,12 +380,12 @@ const LaboratoryItems: NavItem[] = [
                         <ul class="w-max">
                             <li v-for="items in AdmissionItems" :key="items.title">
                             <NavigationMenuLink as-child>
-                                <a
+                                <Link
                                 :href="items.href"
                                 class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                 >
                                 <div class="nav-link">{{ items.title }}</div>
-                                </a>
+                                </Link>
                             </NavigationMenuLink>
                             </li>
                         </ul>
@@ -410,12 +410,12 @@ const LaboratoryItems: NavItem[] = [
                                 <ul class="w-max">
                                     <li v-for="items in LaboratoryItems" :key="items.title">
                                     <NavigationMenuLink as-child>
-                                        <a
+                                        <Link
                                         :href="items.href"
                                         class="block select-none space-y-1 rounded-md py-3 px-6 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                         >
                                         <div class="nav-link">{{ items.title }}</div>
-                                        </a>
+                                        </Link>
                                     </NavigationMenuLink>
                                     </li>
                                 </ul>
@@ -426,12 +426,12 @@ const LaboratoryItems: NavItem[] = [
                             <ul class="w-max">
                                 <li v-for="items in InfrastructureItems" :key="items.title">
                                 <NavigationMenuLink as-child>
-                                    <a
+                                    <Link
                                     :href="items.href"
                                     class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                     >
                                     <div class="nav-link">{{ items.title }}</div>
-                                    </a>
+                                    </Link>
                                 </NavigationMenuLink>
                                 </li>
                             </ul>
@@ -457,12 +457,12 @@ const LaboratoryItems: NavItem[] = [
                             <ul class="w-max">
                                 <li v-for="items in HouseItems" :key="items.title">
                                 <NavigationMenuLink as-child>
-                                    <a
+                                    <Link
                                     :href="items.href"
                                     class="block select-none space-y-1 rounded-md py-3 px-6 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                     >
                                     <div class="nav-link">{{ items.title }}</div>
-                                    </a>
+                                    </Link>
                                 </NavigationMenuLink>
                                 </li>
                             </ul>
@@ -472,12 +472,12 @@ const LaboratoryItems: NavItem[] = [
                                 <ul class="w-full">
                                 <li v-for="items in ActivitiesItems" :key="items.title">
                                 <NavigationMenuLink as-child>
-                                    <a
+                                    <Link
                                     :href="items.href"
                                     class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                     >
                                     <div class="nav-link">{{ items.title }}</div>
-                                    </a>
+                                    </Link>
                                 </NavigationMenuLink>
                                 </li>
                             </ul>
@@ -496,12 +496,12 @@ const LaboratoryItems: NavItem[] = [
                         <ul class="w-max">
                             <li v-for="items in AchievementsItems" :key="items.title">
                             <NavigationMenuLink as-child>
-                                <a
+                                <Link
                                 :href="items.href"
                                 class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                 >
                                 <div class="nav-link">{{ items.title }}</div>
-                                </a>
+                                </Link>
                             </NavigationMenuLink>
                             </li>
                         </ul>
