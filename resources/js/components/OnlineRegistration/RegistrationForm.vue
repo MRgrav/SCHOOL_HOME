@@ -10,7 +10,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
@@ -295,7 +294,7 @@ const submitForm = () => {
         </div>
         <div class="space-y-1">
           <Label for="present_school_address">Present School Address: *</Label>
-          <Input id="present_school_address" v-model="form.present_school_address" placeholder="PRESENT SCHOOL ADDRESS"required />
+          <Input id="present_school_address" v-model="form.present_school_address" placeholder="PRESENT SCHOOL ADDRESS" required />
           <div class="text-sm text-red-500" v-if="form.errors.present_school_address">{{ form.errors.present_school_address }}</div>
         </div>
         <div class="space-y-1">

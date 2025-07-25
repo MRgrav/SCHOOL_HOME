@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\OnlineRegistrationController;
-use App\Http\Controllers\SumController;
-use App\Http\Controllers\SubstractController;
 
 
 Route::controller(OnlineRegistrationController::class)->group(function () {
@@ -20,7 +18,7 @@ Route::get('/', function () {
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'admin'])->name('dashboard');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
