@@ -16,8 +16,12 @@ Route::get('/', function () {
 })->name('home');
 
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
+// Route::get('dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified', 'admin'])->name('admin.');
+
+Route::get('/school/dashboard', function () {
+    return Inertia::render('school/Dashboard');
 })->middleware(['auth', 'verified', 'admin'])->name('dashboard');
 
 require __DIR__.'/settings.php';
