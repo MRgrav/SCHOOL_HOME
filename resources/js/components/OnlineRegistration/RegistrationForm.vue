@@ -2,6 +2,9 @@
 import { useForm } from '@inertiajs/vue3'
 import Input from '../ui/input/Input.vue'
 import Label from '../ui/label/Label.vue';
+import { ref } from 'vue';
+import FormSuccess from './FormSuccess.vue';
+
 import {
   Select,
   SelectContent,
@@ -85,6 +88,9 @@ const form = useForm({
   payment_screenshot: null,
 })
 
+// initial value of form submit
+const success = ref(false);
+
 // Submit the form using Inertia js Form helper
 const submitForm = () => {
   // form.post('/register/submit', {
@@ -96,10 +102,18 @@ const submitForm = () => {
   console.log(form);
   form.post(route('online-registration.store'),{
     forceFormData: true,
+    onSuccess: () => {
+      success.value = true
+      form.reset()
+    }
   })
 }
 </script>
 <template>
+
+  <!-- Show Success messsage after form submit -->
+  <FormSuccess :show="success" @close="success = false" />
+
   <form @submit.prevent="submitForm" class="space-y-8 p-8">
     <h1 class="text-xl font-bold text-gray-800">STUDENT REGISTRATION FORM</h1>
 

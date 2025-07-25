@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Registration;
+
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -122,6 +124,14 @@ class OnlineRegistrationController extends Controller
             }
         }
 
+        // Merge file names into the validated data
+        $validated = array_merge($validated, $uuidFilenames);
+
+        // Save to database
+        $registration = Registration::create($validated);
+
+        // Reload the page with success message
+        return redirect()->back()->with('success', '...');
     }
 
     /**
