@@ -7,6 +7,7 @@ use App\Models\Registration;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Monolog\Registry;
 
 class OnlineRegistrationController extends Controller
 {
@@ -135,11 +136,20 @@ class OnlineRegistrationController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified registration details.
+     *
+     * @param  string  $id  The ID of the registration to retrieve.
+     * @return \Inertia\Response  Inertia response that renders the RegistrationShow Vue component.
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the registration is not found.
      */
     public function show(string $id)
     {
-        //
+        $registration = Registration::findOrFail($id);
+
+        return Inertia::render('school-admin/Registrations/RegistrationShow', [
+            'registration' => $registration,
+        ]);
     }
 
     /**
@@ -165,4 +175,14 @@ class OnlineRegistrationController extends Controller
     {
         //
     }
+
+    /**
+     * school-admin Index
+     */
+    public function schoolAdminIndex(Request $request)
+    {
+        $registrations = Registration::latest()->get();
+        return Inertia::render('school-admin/Registrations', compact('registrations'));
+    }
+
 }

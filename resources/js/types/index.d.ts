@@ -35,4 +35,17 @@ export interface User {
     updated_at: string;
 }
 
+/**
+ * Registraion interface
+ * Only few keys are here
+ */
+export interface Registration {
+    id: number;
+    applicant_name: string;
+    admission_sought_for_class: string;
+    father_phone: string;
+    created_at: Date;
+    gender: string;
+}
+
 export type BreadcrumbItemType = BreadcrumbItem;
