@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Registration;
-
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
-use Monolog\Registry;
+use Spatie\Browsershot\Browsershot;
 
 class OnlineRegistrationController extends Controller
 {
@@ -131,8 +131,14 @@ class OnlineRegistrationController extends Controller
         // Save to database
         $registration = Registration::create($validated);
 
-        // Reload the page with success message
-        return redirect()->back()->with('success', '...');
+
+        // Reload the page with success flash data
+        return redirect()
+            ->back()
+            ->with('data',  [
+                'message' => 'Registration successful!',
+                'id' => $registration->id,
+            ]);
     }
 
     /**
@@ -183,6 +189,67 @@ class OnlineRegistrationController extends Controller
     {
         $registrations = Registration::latest()->get();
         return Inertia::render('school-admin/Registrations', compact('registrations'));
+    }
+
+    /**
+     * Download or preview registration PDF using Browsershot.
+     * 
+     * @param string $id
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadPdf(string $id)
+    {
+        //query registration from database
+        $registration = Registration::findOrFail($id);
+
+        // Generate PDF using Browsershot
+        $pdf = $this->generatePdf($registration);
+
+        // If 'preview' query parameter is present, return inline PDF
+        if (request()->query('preview')) {
+            return new Response($pdf, 200, [
+                'Content-Type' => 'application/pdf',
+                // 'inline' will display PDF in browser
+                'Content-Disposition' => 'inline; filename="ARPS-' . $registration->id . '.pdf"',
+            ]);
+        }
+
+        // Otherwise, return as downloadable file
+        return new Response($pdf, 200, [
+            'Content-Type' => 'application/pdf',
+            // 'attachment' will prompt download
+            'Content-Disposition' => 'attachment; filename="ARPS-' . $registration->id . '.pdf"',
+            'Content-Length' => strlen($pdf),
+        ]);
+    }
+
+    /**
+     * Generate PDF using Spatie Browsershot.
+     * Uses Blade views: pdfs.registrations.registration-form, _header, _footer
+     *
+     * @param Registration $registration
+     * @return string
+     */
+    public function generatePdf(Registration $registration)
+    {
+        // Render the Blade templates to HTML
+        $template = view('pdfs.registrations.registration-form', ['registration' => $registration])->render();
+        // Render header and footer templates
+        $header = view('pdfs.registrations._header')->render();
+        $footer = view('pdfs.registrations._footer')->render();
+
+        // Generate PDF using Browsershot as a string
+        $pdf = Browsershot::html($template)
+            ->setIncludePath(config('services.browsershot.include_path')) // Required for Linux installs
+            ->format('A4')
+            ->showBrowserHeaderAndFooter()
+            ->headerHtml($header)
+            ->footerHtml($footer)
+            ->margins(40, 20, 10, 20)
+            ->showBackground()
+            ->pdf();
+
+        return $pdf;
     }
 
 }

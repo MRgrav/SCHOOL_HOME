@@ -117,9 +117,16 @@ onBeforeUnmount(() => {
   <SchoolAdminLayout :breadcrumbs="breadcrumbs">
     <div class="p-4">
       <!-- Header with title and download button -->
-      <div class="grid grid-cols-2">
+      <div class="flex justify-between">
         <h2 class="text-2xl font-bold mb-6">Registration Details</h2>
-        <Button class="w-min ms-auto">Download Application</Button>
+        <a
+          :href="`/online-registration/${props.registration.id}/pdf`"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="h-min w-min"
+        >
+          <Button class="w-min ms-auto cursor-pointer">Download Application</Button>
+        </a>
       </div>
 
       <!-- Category Sections -->

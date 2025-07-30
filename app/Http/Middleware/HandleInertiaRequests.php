@@ -51,8 +51,14 @@ class HandleInertiaRequests extends Middleware
                 'location' => $request->url(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            /**
+             * Shared flash data for Inertia responses.
+             * This allows us to pass flash messages and other data to the frontend.
+             * The 'data' key is a closure that retrieves the session data.
+             * DOC is Inertia-js flash
+             */
             'flash' => [
-                'message' => fn () => $request->session()->get('message')
+                'data' => fn () => $request->session()->get('data')
             ],
         ];
     }

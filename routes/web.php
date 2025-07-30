@@ -18,6 +18,10 @@ Route::controller(OnlineRegistrationController::class)->group(function () {
     Route::get('/online-registration', 'create')
         ->name('online-registration.create');
 
+    Route::get('/online-registration/{id}/pdf', 'downloadPdf')
+        ->name('online-registration.pdf')
+        ->whereNumber('id'); 
+
     Route::post('/online-registration', 'store')
         ->name('online-registration.store');
 });

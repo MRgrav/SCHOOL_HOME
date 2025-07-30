@@ -89,29 +89,26 @@ const form = useForm({
 
 // initial value of form submit
 const success = ref(false);
+// ID of the submitted form, used to download PDF
+const submittedId = ref<number | null>(null);
 
 // Submit the form using Inertia js Form helper
 const submitForm = () => {
-  // form.post('/register/submit', {
-  //   forceFormData: true,
-  //   onSuccess: () => {
-  //     console.log('Form submitted successfully')
-  //   },
-  // })
-  console.log(form);
   form.post(route('online-registration.store'),{
     forceFormData: true,
-    onSuccess: () => {
+    onSuccess: (data) => {
       success.value = true
       form.reset()
+      // Set the submitted ID from the flash data
+      submittedId.value = (data.props.flash && (data.props.flash as any).data.id) ?? null;
+      console.log('Form submitted successfully', submittedId.value)
     }
   })
 }
 </script>
 <template>
-
-  <!-- Show Success messsage after form submit -->
-  <FormSuccess :show="success" @close="success = false" />
+  <!-- Show Success messsage after form submit with PDF download link -->
+  <FormSuccess :show="success" @close="success = false" :id="submittedId ?? undefined"/>
 
   <form @submit.prevent="submitForm" class="space-y-8 p-8">
     <h1 class="text-xl font-bold text-gray-800">STUDENT REGISTRATION FORM</h1>
