@@ -22,6 +22,10 @@ Route::controller(OnlineRegistrationController::class)->group(function () {
         ->name('online-registration.pdf')
         ->whereNumber('id'); 
 
+    // Uncomment the following line to enable the test route for sending registration emails
+    // Route::get('/online-registration/mail', 'test')
+    //     ->name('online-registration.mail');
+
     Route::post('/online-registration', 'store')
         ->name('online-registration.store');
 });

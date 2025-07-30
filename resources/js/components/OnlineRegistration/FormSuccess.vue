@@ -28,6 +28,9 @@ defineProps({
     <!-- The success message -->
     <span class="block sm:inline m-2">{{ message }}</span>
 
+    <!-- Registration ID for reference -->
+    <span class="block sm:inline m-2"> Your Registration ID is: <strong>{{ id }}</strong></span>
+
     <!-- Close icon to emit 'close' event to parent -->
     <span class="absolute top-0 bottom-0 right-0 px-4 py-3" @click="$emit('close')">
       <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

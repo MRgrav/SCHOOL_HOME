@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OnlineRegistrationMail;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Spatie\Browsershot\Browsershot;
@@ -131,6 +133,10 @@ class OnlineRegistrationController extends Controller
         // Save to database
         $registration = Registration::create($validated);
 
+        // Generate PDF using Browsershot
+        $pdf = $this->generatePdf($registration);
+
+        $this->sendRegistrationMail($registration, $pdf);
 
         // Reload the page with success flash data
         return redirect()
@@ -252,4 +258,37 @@ class OnlineRegistrationController extends Controller
         return $pdf;
     }
 
+    /**
+     * Summary of sendRegistrationMail
+     * @param mixed $registration
+     * @param mixed $pdf
+     * @return void
+     */
+    public function sendRegistrationMail($registration, $pdf)
+    {
+        Mail::to( strtolower($registration->email) )
+        ->send(new OnlineRegistrationMail($registration, $pdf));
+
+        // TODO send email as queued job
+        // Mail::to(strtolower($registration->email))
+        // ->queue(new OnlineRegistrationMail($registration, $pdf));
+    }
+
+    /**
+     * Test method to send registration mail 
+     */
+    public function test()
+    {
+        //query registration from database
+        $registration = Registration::findOrFail(6);
+
+        // Generate PDF using Browsershot
+        $pdf = $this->generatePdf($registration);
+
+        $this->sendRegistrationMail($registration, $pdf);
+
+        return response()->json([
+            'message' => 'Registration successful! A confirmation email has been sent.',
+        ]);
+    }
 }
