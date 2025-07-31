@@ -15,15 +15,13 @@ class OnlineRegistrationMail extends Mailable
     use Queueable, SerializesModels;
 
     protected $registration;
-    protected $pdf;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($registration, $pdf)
+    public function __construct($registration)
     {
         $this->registration = $registration;
-        $this->pdf = $pdf;
     }
 
     /**
@@ -58,9 +56,12 @@ class OnlineRegistrationMail extends Mailable
     {
         // Attach the PDF file generated for the registration
         // PDF in string format
+        $filename = 'ARPS-' . $this->registration->id . '.pdf';
+        // Define the file path
+        $file = storage_path('app/private/online-registrations/' . $filename);
+
         return [
-            Attachment::fromData(fn () => $this->pdf, 'ARPS-' . $this->registration->id . '.pdf')
-            ->withMime('application/pdf'),
+            Attachment::fromPath($file),
         ];
     }
 }

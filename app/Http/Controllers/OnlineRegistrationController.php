@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Mail\OnlineRegistrationMail;
 use App\Models\Registration;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Spatie\Browsershot\Browsershot;
@@ -134,9 +135,9 @@ class OnlineRegistrationController extends Controller
         $registration = Registration::create($validated);
 
         // Generate PDF using Browsershot
-        $pdf = $this->generatePdf($registration);
+        $this->generatePdf($registration);
 
-        $this->sendRegistrationMail($registration, $pdf);
+        $this->sendRegistrationMail($registration);
 
         // Reload the page with success flash data
         return redirect()
@@ -201,32 +202,20 @@ class OnlineRegistrationController extends Controller
      * Download or preview registration PDF using Browsershot.
      * 
      * @param string $id
-     * @return \Illuminate\Http\Response
      */
     public function downloadPdf(string $id)
     {
-        //query registration from database
         $registration = Registration::findOrFail($id);
 
-        // Generate PDF using Browsershot
-        $pdf = $this->generatePdf($registration);
+        // Generate the PDF (if not already)
+        $this->generatePdf($registration);
 
-        // If 'preview' query parameter is present, return inline PDF
-        if (request()->query('preview')) {
-            return new Response($pdf, 200, [
-                'Content-Type' => 'application/pdf',
-                // 'inline' will display PDF in browser
-                'Content-Disposition' => 'inline; filename="ARPS-' . $registration->id . '.pdf"',
-            ]);
-        }
+        // Define the filename
+        $filename = 'ARPS-' . $registration->id . '.pdf';
+        // Define the file path
+        $file = storage_path('app/private/online-registrations/' . $filename);
 
-        // Otherwise, return as downloadable file
-        return new Response($pdf, 200, [
-            'Content-Type' => 'application/pdf',
-            // 'attachment' will prompt download
-            'Content-Disposition' => 'attachment; filename="ARPS-' . $registration->id . '.pdf"',
-            'Content-Length' => strlen($pdf),
-        ]);
+        return response()->download($file);
     }
 
     /**
@@ -234,28 +223,39 @@ class OnlineRegistrationController extends Controller
      * Uses Blade views: pdfs.registrations.registration-form, _header, _footer
      *
      * @param Registration $registration
-     * @return string
      */
     public function generatePdf(Registration $registration)
     {
-        // Render the Blade templates to HTML
-        $template = view('pdfs.registrations.registration-form', ['registration' => $registration])->render();
-        // Render header and footer templates
-        $header = view('pdfs.registrations._header')->render();
-        $footer = view('pdfs.registrations._footer')->render();
+        // Define the directory and filename
+        $folder = storage_path('app/private/online-registrations');
+        $filename = 'ARPS-' . $registration->id . '.pdf';
+        $pdfPath = $folder . '/' . $filename;
 
-        // Generate PDF using Browsershot as a string
-        $pdf = Browsershot::html($template)
-            ->setIncludePath(config('services.browsershot.include_path')) // Required for Linux installs
-            ->format('A4')
-            ->showBrowserHeaderAndFooter()
-            ->headerHtml($header)
-            ->footerHtml($footer)
-            ->margins(40, 20, 10, 20)
-            ->showBackground()
-            ->pdf();
+        // Create the folder if it does not exist
+        if (!File::exists($folder)) {
+            File::makeDirectory($folder, 0755, true);
+        }
 
-        return $pdf;
+        // Only generate PDF if it doesn't already exist
+        if (!File::exists($pdfPath)) {
+            // Render Blade HTML view
+            $html = view('pdfs.registrations.registration-form', ['registration' => $registration])->render();
+
+            // Optionally render header/footer HTML
+            $header = view('pdfs.registrations._header')->render();
+            $footer = view('pdfs.registrations._footer')->render();
+
+            // Generate PDF using Browsershot
+            Browsershot::html($html)
+                ->setIncludePath(config('services.browsershot.include_path')) // Optional if you need a custom path to Chrome
+                ->format('A4')
+                ->showBrowserHeaderAndFooter()
+                ->headerHtml($header)
+                ->footerHtml($footer)
+                ->margins(40, 20, 10, 20) // top, right, bottom, left
+                ->showBackground()
+                ->save($pdfPath);
+        }
     }
 
     /**
@@ -264,10 +264,10 @@ class OnlineRegistrationController extends Controller
      * @param mixed $pdf
      * @return void
      */
-    public function sendRegistrationMail($registration, $pdf)
+    public function sendRegistrationMail($registration)
     {
         Mail::to( strtolower($registration->email) )
-        ->send(new OnlineRegistrationMail($registration, $pdf));
+        ->send(new OnlineRegistrationMail($registration));
 
         // TODO send email as queued job
         // Mail::to(strtolower($registration->email))
@@ -282,12 +282,13 @@ class OnlineRegistrationController extends Controller
         //query registration from database
         $registration = Registration::findOrFail(6);
 
-        // Generate PDF using Browsershot
-        $pdf = $this->generatePdf($registration);
+        // // Generate PDF using Browsershot
+        $this->generatePdf($registration);
 
-        $this->sendRegistrationMail($registration, $pdf);
+        $this->sendRegistrationMail($registration);
 
         return response()->json([
+            'registration' => $registration,
             'message' => 'Registration successful! A confirmation email has been sent.',
         ]);
     }
