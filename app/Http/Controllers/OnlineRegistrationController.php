@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\OnlineRegistrationMail;
 use App\Models\Registration;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
@@ -226,36 +227,9 @@ class OnlineRegistrationController extends Controller
      */
     public function generatePdf(Registration $registration)
     {
-        // Define the directory and filename
-        $folder = storage_path('app/private/online-registrations');
-        $filename = 'ARPS-' . $registration->id . '.pdf';
-        $pdfPath = $folder . '/' . $filename;
+        $pdf = Pdf::loadView('pdfs.registrations.registration-form', ['registration' => $registration]);
+        $pdf->save(storage_path('app/private/online-registrations/ARPS-' . $registration->id . '.pdf'));
 
-        // Create the folder if it does not exist
-        if (!File::exists($folder)) {
-            File::makeDirectory($folder, 0755, true);
-        }
-
-        // Only generate PDF if it doesn't already exist
-        if (!File::exists($pdfPath)) {
-            // Render Blade HTML view
-            $html = view('pdfs.registrations.registration-form', ['registration' => $registration])->render();
-
-            // Optionally render header/footer HTML
-            $header = view('pdfs.registrations._header')->render();
-            $footer = view('pdfs.registrations._footer')->render();
-
-            // Generate PDF using Browsershot
-            Browsershot::html($html)
-                ->setIncludePath(config('services.browsershot.include_path')) // Optional if you need a custom path to Chrome
-                ->format('A4')
-                ->showBrowserHeaderAndFooter()
-                ->headerHtml($header)
-                ->footerHtml($footer)
-                ->margins(40, 20, 10, 20) // top, right, bottom, left
-                ->showBackground()
-                ->save($pdfPath);
-        }
     }
 
     /**
@@ -268,10 +242,6 @@ class OnlineRegistrationController extends Controller
     {
         Mail::to( strtolower($registration->email) )
         ->send(new OnlineRegistrationMail($registration));
-
-        // TODO send email as queued job
-        // Mail::to(strtolower($registration->email))
-        // ->queue(new OnlineRegistrationMail($registration, $pdf));
     }
 
     /**
@@ -282,14 +252,12 @@ class OnlineRegistrationController extends Controller
         //query registration from database
         $registration = Registration::findOrFail(6);
 
-        // // Generate PDF using Browsershot
-        $this->generatePdf($registration);
+        $pdf = Pdf::loadView('pdfs.registrations.registration-form', ['registration' => $registration]);
+        $pdf->save(storage_path('app/private/online-registrations/ARPS-' . $registration->id . '.pdf'));
 
+        // Send the registration mail
         $this->sendRegistrationMail($registration);
 
-        return response()->json([
-            'registration' => $registration,
-            'message' => 'Registration successful! A confirmation email has been sent.',
-        ]);
+        return response()->json(['message' => 'Test mail sent successfully!']);
     }
 }
