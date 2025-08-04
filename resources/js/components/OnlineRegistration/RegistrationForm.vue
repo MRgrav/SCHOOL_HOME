@@ -570,6 +570,7 @@ const submitForm = () => {
     <!-- PAYMENT -->
     <div class="space-y-4">
       <h3  class="text-lg font-semibold text-white bg-sky-400 p-2">PAYMENT SCREENSHOT</h3>
+      <Img src="storage/uploads/arps-upi-qr.jpg"></Img>
       <div class="space-y-1">
         <Label for="payment_screenshot">Upload Screenshot *</Label>
         <Input id="payment_screenshot" type="file"  @input="form.payment_screenshot = $event.target.files[0]" required/>
