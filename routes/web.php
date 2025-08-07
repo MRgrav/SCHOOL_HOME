@@ -43,6 +43,21 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+// Notifications page
+Route::get('/notifications', function () {
+     $notifications = Notification::orderBy('created_at', 'desc')
+                                    ->get();
+
+    return Inertia::render('Notifications/Index', [
+       'notifications' => $notifications,
+    ]);
+})->name('notifications');
+Route::get('/notifications/{notification}', function (Notification $notification) {
+    return Inertia::render('Notifications/Show', [
+        'notification' => $notification,
+    ]);
+})->name('notifications.show');
+
 /*
 |--------------------------------------------------------------------------
 | School Admin Routes (Protected)
