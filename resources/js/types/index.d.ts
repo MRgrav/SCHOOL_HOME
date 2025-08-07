@@ -48,4 +48,15 @@ export interface Registration {
     gender: string;
 }
 
+/**
+ * Registraion interface
+ * Only few keys are here
+ */
+export interface Notification {
+    id: number;
+    title: string;
+    message: string;
+    created_at: Date;
+}
+
 export type BreadcrumbItemType = BreadcrumbItem;

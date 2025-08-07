@@ -1,28 +1,15 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
 import { CalendarDays, ArrowBigRight } from 'lucide-vue-next';
-// import { defineProps } from 'vue';
+/**
+ * Props definition
+ * The component expects an array of registrations.
+ */
+interface Props {
+  notifications: Notification[]
+}
+const props = defineProps<Props>() // Make props reactive and type-safe.
 
-// const props = defineProps({
-//     about: String,
-// });
-
-const notifications = [
-    {
-        "Title":"Test Notification",
-        "Message": "This is a test notification",
-        "Date": "2023-10-01:10:00",
-    },
-    {
-        "Title": "Another Notification",
-        "Message": "This is another notification",
-        "Date": "2023-10-02:11:00",
-    },
-    {
-        "Title": "Important Update",
-        "Message": "Please read this important update",
-        "Date": "2023-10-03:12:00",
-    }
-]
 
 </script>
 
@@ -37,23 +24,35 @@ const notifications = [
             </p>
         </div>
         <div class="bg-[url('/storage/uploads/hero-1.jpeg')] bg-cover bg-center">
-            <div class="bg-blue-950/97 py-8 backdrop-blur-xs px-10 ">
-                <div class="flex justify-center mb-8">
-                    <h2 class="border-l-6 border-white ps-6 ">Notifications</h2>
+            <div class="bg-blue-950/97 py-8 backdrop-blur-xs px-10">
+                <div class="flex justify-center">
+                    <h2 class="border-l-6 mb-8 border-white ps-6 ">Notifications</h2>
                 </div>
-                <ul class="space-y-5">
-                    <li v-for="(notification, index) in notifications" :key="index">
-                        <h3 class="text-lg font-semibold">{{ notification.Title }}</h3>
-                        <br>
-                        <div class="flex gap-5 align-middle ">
-                            <CalendarDays/>{{ notification.Date }}
-                        </div>
-                        <hr class="mt-5">
+                <ul class="space-y-2">
+                    <li v-for="notification in props.notifications" :key="notification.id">
+                         <Link :href="`/notifications/${notification.id}`">
+                            <h3 class="text-lg mb-3 font-semibold">{{ notification.title }}</h3>
+                            <div class="flex gap-4 items-center text-white/80">
+                                <CalendarDays class="size-5"/>
+                                {{
+                                    new Date(notification.created_at).toLocaleString('en-CA', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    })
+                                }}
+                            </div>
+                            <hr class="mt-4 border-white/50">
+                        </Link>
                     </li>
                 </ul>
-                <div class="flex justify-center items-center mt-5">
-                    <span>Read More</span>
-                    <ArrowBigRight class="size-5"/>
+                <div class="flex justify-center items-center mt-3">
+                    <Link href="/notifications" class="flex items-center">
+                        <span>Read More</span>
+                        <ArrowBigRight class="size-5"/>
+                    </Link>
                 </div>
             </div>
         </div>

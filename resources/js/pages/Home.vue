@@ -30,6 +30,15 @@ const data = [
     }
 ]
 
+/**
+ * Props definition
+ * The component expects an array of registrations.
+ */
+interface Props {
+  notifications: Notification[]
+}
+const props = defineProps<Props>() // Make props reactive and type-safe.
+
 
 </script>
 
@@ -40,7 +49,7 @@ const data = [
     </Head>
     <AppLayout>
         <Hero />
-        <AboutAndNotification/>
+        <AboutAndNotification :notifications="props.notifications"/>
         <div class="p-8">
             <h2 class="text-center mt-10">Messages From​</h2>
             <div class="flex justify-center my-16">
