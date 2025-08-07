@@ -51,4 +51,10 @@ class User extends Authenticatable
     {
         return $this->is_admin;
     }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
 }
