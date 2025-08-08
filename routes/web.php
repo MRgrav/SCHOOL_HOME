@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DepartmentController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -160,6 +161,28 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
         Route::get('/profiles/{id}', [ProfileController::class, 'show'])
             ->name('school-admin.profiles.show');
+
+        // Departments Admin page
+        Route::get('/departments', [DepartmentController::class, 'index'])
+            ->name('school-admin.departments.index');
+
+        Route::get('/departments/create', [DepartmentController::class, 'create'])
+            ->name('school-admin.departments.create');
+        
+        Route::post('/departments', [DepartmentController::class, 'store'])
+            ->name('school-admin.departments.store');
+
+        Route::get('/departments/{id}/edit', [DepartmentController::class, 'edit'])
+            ->name('school-admin.departments.edit');
+
+        Route::post('/departments/{id}/update', [DepartmentController::class, 'update'])
+            ->name('school-admin.departments.update');
+
+        Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])
+            ->name('school-admin.departments.delete');
+
+        Route::get('/departments/{id}', [DepartmentController::class, 'show'])
+            ->name('school-admin.departments.show');
 
 
         // Posts page
