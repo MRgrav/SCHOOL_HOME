@@ -32,7 +32,7 @@ const props = defineProps<Props>() // Make props reactive and type-safe.
         <AboutAndNotification :notifications="props.notifications"/>
         <div class="p-8">
             <div class="flex justify-center">
-                <h2 class="mt-20 text-[#4e71ff] border-l-4 border-[#4e71ff] px-3">Messages From​</h2>
+                <h2 class="mt-20 text-[#4e71ff] border-[#4e71ff] px-3">Messages From​</h2>
             </div>
             <div class="flex justify-center my-25">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-15">

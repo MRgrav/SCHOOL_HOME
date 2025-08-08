@@ -23,8 +23,9 @@ const handleImageError = (event: Event) => {
 
         <!-- Profile Card Overlapping Hero -->
         <div class="p-8 -mt-40 relative z-10">
-            <div class="bg-white shadow-sm rounded-lg overflow-hidden p-6">
-                <div class="gap-8 flex flex-col md:flex-row">
+            <div class="bg-white  rounded-lg overflow-hidden border shadow-sm">
+     
+                <div class="gap-8 flex flex-col md:flex-row py-8">
                     <!-- Left Column: Profile Image -->
                     <div class="flex flex-col items-center p-8">
                         <img :src="`/storage/uploads/${props.profile.image}`" alt="Profile Image"
@@ -60,10 +61,11 @@ const handleImageError = (event: Event) => {
                         </div>
                     </div>
                 </div>
+      
                 <!-- Personal Message -->
-                <div v-if="props.profile.message" class="p-8 lg:p-16">
+                <div v-if="props.profile.message" class="p-8 lg:p-16 bg-slate-100/50 border border-t-0 rounded-b-lg">
                     <h2 class="font-semibold text-gray-800 mb-8">Message</h2>
-                    <div class="bg-blue-50 p-4 rounded-lg text-gray-700 italic whitespace-pre-line">
+                    <div class="text-gray-700 italic whitespace-pre-line">
                         "{{ props.profile.message }}"
                     </div>
                 </div>
