@@ -26,6 +26,11 @@ class Profile extends Model
         return $this->belongsTo(Role::class);
     }
 
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
     /**
      * Get the role's display name easily (e.g. "Teacher").
      */
