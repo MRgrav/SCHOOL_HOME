@@ -59,4 +59,28 @@ export interface Notification {
     created_at: Date;
 }
 
+export interface Role {
+  id: number;
+  name: string;
+  display_name?: string | null;
+  description?: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface Profile {
+  id: number;
+  name: string;
+  image: string | null;
+  role_id?: number | null;
+  role?: Role | null;
+  position?: string | null;
+  department?: string | null;
+  detail?: string | null;
+  message?: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+
 export type BreadcrumbItemType = BreadcrumbItem;
