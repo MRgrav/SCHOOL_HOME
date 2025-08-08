@@ -8,27 +8,7 @@ import NewsAndEvents from '@/components/Home/NewsAndEvents.vue';
 import AboutUs from '@/components/Home/AboutUs.vue';
 import Stats from '@/components/Home/Stats.vue';
 import Activities from '@/components/Home/Activities.vue';
-
-const data = [
-    {
-        image: "hero-2.jpeg",
-        name: "Uday Subba",
-        title: "Principle",
-        message: "Dear Students, Parents, and Esteemed Members of the Assam Rifles Public School Community,I extend my warm greetings to all of you.At Assam Rifles Public School, our commitment is to provide a nurturing environment that fosters academic excellence, character development, and holistic growth. Our dedicated faculty and staff work tirelessly to ensure that each student receives a well-rounded education, equipping them with the skills and values necessary to navigate the challenges of the future."
-    },
-    {
-        image: "hero-3.jpeg",
-        name: "Tiklu Subba",
-        title: "Principle",
-        message: "Dear Students, Parents, and Esteemed Members of the Assam Rifles Public School Community,I extend my warm greetings to all of you.At Assam Rifles Public School, our commitment is to provide a nurturing environment that fosters academic excellence, character development, and holistic growth. Our dedicated faculty and staff work tirelessly to ensure that each student receives a well-rounded education, equipping them with the skills and values necessary to navigate the challenges of the future."
-    },
-    {
-        image: "hero-1.jpeg",
-        name: "Ajoy Subba",
-        title: "Principle",
-        message: "Dear Students, Parents, and Esteemed Members of the Assam Rifles Public School Community,I extend my warm greetings to all of you.At Assam Rifles Public School, our commitment is to provide a nurturing environment that fosters academic excellence, character development, and holistic growth. Our dedicated faculty and staff work tirelessly to ensure that each student receives a well-rounded education, equipping them with the skills and values necessary to navigate the challenges of the future."
-    }
-]
+import { Profile } from '@/types';
 
 /**
  * Props definition
@@ -36,9 +16,9 @@ const data = [
  */
 interface Props {
   notifications: Notification[]
+  profiles: Profile[]
 }
 const props = defineProps<Props>() // Make props reactive and type-safe.
-
 
 </script>
 
@@ -51,11 +31,13 @@ const props = defineProps<Props>() // Make props reactive and type-safe.
         <Hero />
         <AboutAndNotification :notifications="props.notifications"/>
         <div class="p-8">
-            <h2 class="text-center mt-10">Messages From​</h2>
-            <div class="flex justify-center my-16">
+            <div class="flex justify-center">
+                <h2 class="mt-20 text-[#4e71ff] border-l-4 border-[#4e71ff] px-3">Messages From​</h2>
+            </div>
+            <div class="flex justify-center my-25">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-15">
-                    <div class="max-w-[320px]" v-for="index in 3" :key="index - 1">
-                        <MessageCard v-bind="data[index - 1]"/>
+                    <div class="md:max-w-[350px]" v-for="(profile, index) in props.profiles" :key="index">
+                        <MessageCard v-if="profile" :profile="profile"/>
                     </div>
                 </div>
             </div>

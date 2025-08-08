@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\OnlineRegistrationController;
@@ -38,12 +39,24 @@ Route::controller(OnlineRegistrationController::class)->group(function () {
 
 // Home page
 Route::get('/', function () {
-     $notifications = Notification::orderBy('created_at', 'desc')
+    $notifications = Notification::orderBy('created_at', 'desc')
                                     ->limit(4)
                                     ->get();
 
+    $roles = Role::whereIn('name', ['principal', 'vice_principal', 'coordinator'])->pluck('id', 'name');
+
+    $profiles = [
+        'principal'       => Profile::where('role_id', $roles['principal'])->first(),
+        'vice_principal'  => Profile::where('role_id', $roles['vice_principal'])->first(),
+        'coordinator'     => Profile::where('role_id', $roles['coordinator'])->first(),
+    ];
+
+    foreach ($profiles as $profile) {
+        $profile->load('role');
+    }
     return Inertia::render('Home', [
        'notifications' => $notifications,
+       'profiles' => $profiles,
     ]);
 })->name('home');
 

@@ -3,7 +3,7 @@
 </script>
 <template>
     <div class="p-8 py-20 bg-[var(--primary-brand-500)] text-white">
-        <h2 class="text-center font-semibold  py-3">Our Activities</h2>
+        <h2 class="text-center py-10">Our Activities</h2>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 py-10">
             <div class="flex flex-col justify-center">

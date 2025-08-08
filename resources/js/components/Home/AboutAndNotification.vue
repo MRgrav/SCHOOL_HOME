@@ -15,7 +15,7 @@ const props = defineProps<Props>() // Make props reactive and type-safe.
 
 
 <template>
-    <div class="grid grid-cols-1 lg:grid-cols-2 bg-[var(--primary-brand-500)] p-8 text-white gap-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 bg-[var(--primary-brand-500)] px-8 py-16 text-white gap-10">
         <div class="grid place-content-center p-8 gap-6">
             <h2>About Us</h2>
             <p>

@@ -12,10 +12,10 @@ const carouselConfig = {
 </script>
 
 <template>
-  <div class="relative w-full h-[450px] overflow-hidden">
+  <div class="relative w-full h-[550px] overflow-hidden">
     <Carousel v-bind="carouselConfig" class="w-full h-full">
       <Slide v-for="index in 4" :key="index">
-        <div class="w-full h-[450px]">
+        <div class="w-full h-[550px]">
           <img
             :src="`/storage/uploads/hero-${index}.jpeg`"
             alt="Hero Slide"
@@ -26,13 +26,13 @@ const carouselConfig = {
     </Carousel>
 
     <!-- ✅ Centered Overlay Content -->
-    <div class="absolute inset-0 flex justify-center items-end p-6">
+    <div class="absolute inset-0 flex justify-center items-end p-8">
       <div class="z-10 bg-blue-600/50 p-6 text-white">
         <span>Welcome to</span>
         <h1><span class="text-[#ffeb00]">ARPS</span> Jorhat</h1>
         <span>This is where we teach students skills they need to transform themselves, others, and our global communities.</span>
         <div class="flex justify-center mt-5">
-            <Link :href="online-registration" as="button" class="bg-[#ff5544] hover:bg-[#ff6655] hover:scale-105 rounded-xs py-2 px-4 flex items-center cursor-pointer ease-in-out`">
+            <Link :href="`online-registration`" class="bg-[#ff5544] hover:bg-[#ff6655] hover:scale-102 rounded-xs py-2 px-4 flex items-center ease-in-out duration-300">
                 <span>Addmission Now</span>
                 <ArrowUpRight class="inline ml-1 stroke-[2.5] w-4 h-4 text-current" />
             </Link>

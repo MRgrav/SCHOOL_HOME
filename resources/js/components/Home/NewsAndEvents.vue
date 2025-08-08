@@ -3,7 +3,7 @@
 
 <template>
   <div class="bg-[#4e71ff] px-8 py-18">
-    <h2 class="text-center text-white text-3xl font-semibold">News & Events</h2>
+    <h2 class="text-center text-white py-10 font-semibold">News & Events</h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 py-10">
       <div v-for="index in 6" :key="index" class=" h-64 border border-blue-200 bg-cover bg-center bg-no-repeat border-r-4 border-b-4 transform transition duration-300 hover:scale-101 relative" :style="{ backgroundImage: `url('/storage/uploads/hero-${index}.jpeg')` }">

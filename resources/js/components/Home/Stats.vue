@@ -3,8 +3,8 @@ import { UserPen, GraduationCapIcon } from 'lucide-vue-next';
 
 </script>
 <template>
-    <div class="p-8 border-b-[.5px] py-20">
-        <h2 class="text-center font-semibold text-gray-600 py-3">Heart of Our Success</h2>
+    <div class="p-8 border-b-[.5px]">
+        <h2 class="text-center text-[#4e71ff] py-10">Heart of Our Success</h2>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 py-10">
             <div>
