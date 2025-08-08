@@ -571,8 +571,9 @@ const submitForm = () => {
     <div class="space-y-4">
       <h3  class="text-lg font-semibold text-white bg-sky-400 p-2">PAYMENT SCREENSHOT</h3>
       <Img src="storage/uploads/arps-upi-qr.jpg"></Img>
+      <h4>Please pay Rs 200 by Scanning the QR code using any UPI Payments app</h4>
       <div class="space-y-1">
-        <Label for="payment_screenshot">Upload Screenshot *</Label>
+        <Label for="payment_screenshot">Upload Screenshot: (Format - jpg,png,jpeg,pdf | Size - max 1 mb)*</Label>
         <Input id="payment_screenshot" type="file"  @input="form.payment_screenshot = $event.target.files[0]" required/>
         <div class="text-sm text-red-500" v-if="form.errors.payment_screenshot">{{ form.errors.payment_screenshot }}</div>
       </div>
