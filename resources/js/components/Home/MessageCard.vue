@@ -16,7 +16,7 @@ const handleImageError = (event: Event) => {
 
 
 <template>
-    <Link :href="`/profiles/${props.profile.id}`" class="border overflow-hidden border-[var(--primary-brand-500)]/80 border-b-10 border-r-10 rounded-xs block hover:scale-101 transition duration-400 ease-in-out shadow-md">
+    <Link :href="`/profiles/${props.profile.id}`" class="border overflow-hidden border-[var(--primary-brand-500)]/80 border-b-10 border-r-10 rounded-xs block hover:scale-101 transition duration-400 ease-in-out shadow-md h-full">
         <div class="aspect-[4/3] object-center object-cover">
             <img v-if="props.profile.image" :src="`/storage/uploads/${props.profile.image}`"
                 class="w-full h-full object-cover" @error="handleImageError" alt="Profile Image" />
