@@ -19,8 +19,8 @@ const props = defineProps<Props>() // Make props reactive and type-safe.
         <div class="grid place-content-center p-8 gap-6">
             <h2>About Us</h2>
             <p>
-                If you’re looking to belong to a friendly, close-knit community, DWU might just be the perfect place for you. Our campus is lively and filled with a strong, genuine and supportive group of people that are here to nourish your growth and development.
-                "DWU is about community. If you want a space where you can authentically grow into the best version of yourself, DWU is the place for you."
+                Established in 1977, Assam Rifles Junior School in Jorhat we’re a CBSE-affiliated institution offering English-medium education from Nursery to Class XII. In senior secondary, we offer Humanities, Commerce, and Science streams. With well-equipped classrooms, playrooms, music and computer labs, and sports facilities, we foster creativity and learning.
+                Our dedicated team of teachers supports both academic and emotional growth, ensuring a well-rounded development. — helping our students build a strong foundation for the future.
             </p>
         </div>
         <div class="bg-[url('/storage/uploads/hero-1.jpeg')] bg-cover bg-center">
