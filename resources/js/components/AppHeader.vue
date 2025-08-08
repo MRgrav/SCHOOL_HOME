@@ -190,7 +190,7 @@ const LaboratoryItems: NavItem[] = [
     <Infobar/>
     <div class="flex items-center px-4 md:px-10 py-3 shadow-sm">
 
-        <Link :href="route('dashboard')" class="flex items-center gap-x-3 w-full lg:w-fit">
+        <Link :href="'/'" class="flex items-center gap-x-3 w-full lg:w-fit">
             <AppLogo />
         </Link>
 
