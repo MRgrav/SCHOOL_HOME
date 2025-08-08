@@ -24,12 +24,21 @@
             </div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 py-10">
+            <div class="flex flex-col justify-center lg:hidden">
+                <h3
+                    class="border-blue-200 p-3 mb-2 border-b-1 border-l-5">
+                    Sports at a Glance
+                </h3>
+                <p>
+                    Sports are an integral part of our school’s curriculum, promoting physical fitness, teamwork, and a healthy competitive spirit. Our students actively participate in various indoor and outdoor games, excelling at inter-school, district, and state-level events. Through sports, we nurture discipline, resilience, and all-round development.
+                </p>
+            </div>
             <div class="flex flex-col">
                 <div class=" h-100 border border-blue-200 bg-cover bg-center bg-no-repeat border-r-4 border-b-4 transform transition duration-300 hover:scale-101 relative"
                     :style="{ backgroundImage: `url('/storage/uploads/hero-1.jpeg')` }">
                 </div>
             </div>
-            <div class="flex flex-col justify-center">
+            <div class="hidden lg:flex flex-col justify-center">
                 <h3
                     class="border-blue-200 p-3 mb-2 border-b-1 border-l-5">
                     Sports at a Glance
