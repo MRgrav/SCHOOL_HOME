@@ -51,9 +51,13 @@ Route::get('/', function () {
         'coordinator'     => Profile::where('role_id', $roles['coordinator'])->first(),
     ];
 
-    foreach ($profiles as $profile) {
-        $profile->load('role');
+    // Safely load role relation if profile exists
+    foreach ($profiles as $key => $profile) {
+        if ($profile) {
+            $profile->load('role');
+        }
     }
+    
     return Inertia::render('Home', [
        'notifications' => $notifications,
        'profiles' => $profiles,
