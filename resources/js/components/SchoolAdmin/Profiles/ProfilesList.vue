@@ -21,7 +21,7 @@ const props = defineProps<Props>() // Make props reactive and type-safe.
   <!-- Main Table -->
   <Table>
     <!-- Caption  -->
-    <TableCaption>A list of your recent registrations.</TableCaption>
+    <TableCaption>A list of your recent Profiles.</TableCaption>
 
     <!-- Table header row -->
     <TableHeader>
