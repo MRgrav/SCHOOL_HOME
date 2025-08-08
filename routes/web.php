@@ -6,6 +6,8 @@ use App\Http\Controllers\OnlineRegistrationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Notification;
+use App\Models\Profile;
+use Illuminate\Validation\Rules\Numeric;
 use Nette\Utils\Strings;
 
 /*
@@ -63,6 +65,14 @@ Route::get('/notifications/{notification}', function (Notification $notification
 Route::get('/messages/{name}', function (String $name) {
     return $name;
 });
+
+Route::get('/profiles/{id}', function (int $id) {
+    $profile = Profile::findOrFail($id);
+    $profile->load('role');
+    return Inertia::render('Profile', [
+        'profile' => $profile,
+    ]);
+})->whereNumber('id');
 
 /*
 |--------------------------------------------------------------------------
