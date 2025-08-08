@@ -22,6 +22,11 @@ class RoleSeeder extends Seeder
                 'description' => 'Assists the principal in school operations and administration.',
             ],
             [
+                'name' => 'coordinator',
+                'display_name' => 'Coordinator',
+                'description' => 'Manages and coordinates specific school programs or activities'
+            ],
+            [
                 'name' => 'teacher',
                 'display_name' => 'Teacher',
                 'description' => 'Responsible for teaching and guiding students in specific subjects.',
