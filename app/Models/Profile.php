@@ -13,7 +13,7 @@ class Profile extends Model
         'image',
         'role_id',
         'position',
-        'department',
+        'department_id',
         'detail',
         'message',
     ];
