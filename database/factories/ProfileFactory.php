@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Department;
 use App\Models\Profile;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,7 +24,7 @@ class ProfileFactory extends Factory
             'image' => 'profiles/default.jpg',
             'role_id' => Role::inRandomOrder()->first()?->id,
             'position' => $this->faker->jobTitle,
-            'department' => $this->faker->randomElement(['Math', 'Science', 'Admin']),
+            'department_id' => Department::inRandomOrder()->first()?->id,
             'detail' => $this->faker->paragraph,
             'message' => $this->faker->sentence,
         ];
