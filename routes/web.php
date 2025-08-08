@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DepartmentController;
+use App\Models\Department;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,7 +29,7 @@ Route::controller(OnlineRegistrationController::class)->group(function () {
 
     Route::get('/online-registration/{id}/pdf', 'downloadPdf')
         ->name('online-registration.pdf')
-        ->whereNumber('id'); 
+        ->whereNumber('id');
 
     // Uncomment the following line to enable the test route for sending registration emails
     // Route::get('/online-registration/mail', 'test')
@@ -41,8 +42,8 @@ Route::controller(OnlineRegistrationController::class)->group(function () {
 // Home page
 Route::get('/', function () {
     $notifications = Notification::orderBy('created_at', 'desc')
-                                    ->limit(4)
-                                    ->get();
+        ->limit(4)
+        ->get();
 
     $roles = Role::whereIn('name', ['principal', 'vice_principal', 'coordinator'])->pluck('id', 'name');
 
@@ -58,31 +59,46 @@ Route::get('/', function () {
             $profile->load('role');
         }
     }
-    
+
     return Inertia::render('Home', [
-       'notifications' => $notifications,
-       'profiles' => $profiles,
+        'notifications' => $notifications,
+        'profiles' => $profiles,
     ]);
 })->name('home');
 
-// Notifications page
+/**
+ * Faculty page
+ */
+Route::get('/faculty', function () {
+
+    $departments = Department::all();
+    $profiles = Profile::all();
+    return Inertia::render('Faculty/Index', [
+        'departments' => $departments,
+        'profiles' => $profiles,
+    ]);
+
+})->name('faculty');
+
+/** 
+ * Notifications page
+*/
 Route::get('/notifications', function () {
-     $notifications = Notification::orderBy('created_at', 'desc')
-                                    ->get();
+    $notifications = Notification::orderBy('created_at', 'desc')
+        ->get();
 
     return Inertia::render('Notifications/Index', [
-       'notifications' => $notifications,
+        'notifications' => $notifications,
     ]);
 })->name('notifications');
+
 Route::get('/notifications/{notification}', function (Notification $notification) {
     return Inertia::render('Notifications/Show', [
         'notification' => $notification,
     ]);
 })->name('notifications.show');
 
-Route::get('/messages/{name}', function (String $name) {
-    return $name;
-});
+
 
 Route::get('/profiles/{id}', function (int $id) {
     $profile = Profile::findOrFail($id);
@@ -124,7 +140,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
         Route::get('/notifications/create', [NotificationController::class, 'create'])
             ->name('school-admin.notifications.create');
-        
+
         Route::post('/notifications', [NotificationController::class, 'store'])
             ->name('school-admin.notifications.store');
 
@@ -146,7 +162,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
         Route::get('/profiles/create', [ProfileController::class, 'create'])
             ->name('school-admin.profiles.create');
-        
+
         Route::post('/profiles', [ProfileController::class, 'store'])
             ->name('school-admin.profiles.store');
 
@@ -168,7 +184,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
         Route::get('/departments/create', [DepartmentController::class, 'create'])
             ->name('school-admin.departments.create');
-        
+
         Route::post('/departments', [DepartmentController::class, 'store'])
             ->name('school-admin.departments.store');
 
@@ -206,5 +222,5 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 | Load modular route files.
 |
 */
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
