@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\OnlineRegistrationController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Notification;
+use Nette\Utils\Strings;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +60,10 @@ Route::get('/notifications/{notification}', function (Notification $notification
     ]);
 })->name('notifications.show');
 
+Route::get('/messages/{name}', function (String $name) {
+    return $name;
+});
+
 /*
 |--------------------------------------------------------------------------
 | School Admin Routes (Protected)
@@ -106,10 +112,36 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
             ->name('school-admin.notifications.show');
 
 
+        // Profiles Admin page
+        Route::get('/profiles', [ProfileController::class, 'index'])
+            ->name('school-admin.profiles.index');
+
+        Route::get('/profiles/create', [ProfileController::class, 'create'])
+            ->name('school-admin.profiles.create');
+        
+        Route::post('/profiles', [ProfileController::class, 'store'])
+            ->name('school-admin.profiles.store');
+
+        Route::get('/profiles/{id}/edit', [ProfileController::class, 'edit'])
+            ->name('school-admin.profiles.edit');
+
+        Route::post('/profiles/{id}/update', [ProfileController::class, 'update'])
+            ->name('school-admin.profiles.update');
+
+        Route::delete('/profiles/{id}', [ProfileController::class, 'destroy'])
+            ->name('school-admin.profiles.delete');
+
+        Route::get('/profiles/{id}', [ProfileController::class, 'show'])
+            ->name('school-admin.profiles.show');
+
+
         // Posts page
         Route::get('/posts', function () {
             return Inertia::render('school-admin/Posts');
         })->name('school-admin.posts');
+
+        Route::resource('profiles', ProfileController::class);
+
 
         // Route::resource('notifications', NotificationController::class);
 
