@@ -27,7 +27,7 @@ const props = defineProps<Props>() // Make props reactive and type-safe.
     <TableHeader>
       <TableRow>
         <TableHead class="w-[100px]">Name</TableHead>
-        <TableHead>Position</TableHead>
+        <TableHead>Role</TableHead>
         <TableHead>Department</TableHead>
         <TableHead class="text-right">Quick Action</TableHead>
       </TableRow>
@@ -41,11 +41,11 @@ const props = defineProps<Props>() // Make props reactive and type-safe.
         <!-- Name -->
         <TableCell class="w-[100px]">{{ profile.name }}</TableCell>
 
-        <!-- Position -->
-        <TableCell>{{ profile.position }}</TableCell>
+        <!-- Role -->
+        <TableCell>{{ profile.role?.display_name }}</TableCell>
 
         <!-- Department for -->
-        <TableCell>{{ profile.department }}</TableCell>
+        <TableCell>{{ profile.department?.display_name }}</TableCell>
 
 
         <!-- Actions -->

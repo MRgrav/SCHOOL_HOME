@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Input } from '@/components/ui/input';
 import SchoolAdminLayout from '@/layouts/SchoolAdminLayout.vue';
-import { Profile, Role, type BreadcrumbItem } from '@/types';
+import { Department, Profile, Role, type BreadcrumbItem } from '@/types';
 import { Head, useForm, Link } from '@inertiajs/vue3';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,8 @@ import { Textarea } from '@/components/ui/textarea';
 
 const props = defineProps<{
   profile: Profile,
-  roles: Role[]
+  roles: Role[],
+  departments: Department[],
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -23,7 +24,7 @@ const form = useForm({
   name: props.profile.name ?? '',
   role_id: props.profile.role_id ?? '',
   position: props.profile.position ?? '',
-  department: props.profile.department ?? '',
+  department_id: props.profile.department_id ?? '',
   detail: props.profile.detail ?? '',
   message: props.profile.message ?? '',
   image: null,
@@ -74,7 +75,22 @@ const submit = () => {
         <!-- Department -->
         <div>
           <label class="block font-medium">Department</label>
-          <Input v-model="form.department" type="text" class="w-full border rounded px-3 py-2" />
+
+            <Select v-model="form.department_id">
+              <SelectTrigger class="form-select w-full">
+                <SelectValue placeholder="-- Select --" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem :value="null">None</SelectItem>
+                  <SelectItem v-for="department in $props.departments" :key="department.id" :value="department.id">{{ department.display_name }}</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+          <div v-if="form.errors.department_id" class="text-red-500 text-sm">
+            {{ form.errors.department_id }}
+          </div>
         </div>
 
         <!-- Detail -->
@@ -86,7 +102,7 @@ const submit = () => {
         <!-- Message -->
         <div>
           <label class="block font-medium">Message</label>
-          <Textarea v-model="form.message" class="w-full border rounded px-3 py-2"></Textarea>
+          <Textarea v-model="form.message" rows="10" class="w-full border rounded px-3 py-2"></Textarea>
         </div>
 
         <!-- Image Upload -->

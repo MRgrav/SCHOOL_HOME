@@ -2,7 +2,7 @@
 import SchoolAdminLayout from '@/layouts/SchoolAdminLayout.vue';
 import { Head, useForm, Link } from '@inertiajs/vue3';
 import Button from '@/components/ui/button/Button.vue';
-import { Role, type BreadcrumbItem } from '@/types';
+import { Department, Role, type BreadcrumbItem } from '@/types';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem } from '@/components/ui/select';
@@ -14,14 +14,15 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 defineProps<{
-  roles: Role[]
+  roles: Role[],
+  departments: Department[]
 }>();
 
 const form = useForm({
   name: '',
   role_id: '',
   position: '',
-  department: '',
+  department_id: '',
   detail: '',
   message: '',
   image: null,
@@ -81,7 +82,21 @@ const submit = () => {
         <!-- Department -->
         <div>
           <label class="block font-medium">Department</label>
-          <Input v-model="form.department" type="text" class="w-full border rounded px-3 py-2" />
+
+            <Select v-model="form.department_id">
+              <SelectTrigger class="form-select w-full">
+                <SelectValue placeholder="-- Select --" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem v-for="department in $props.departments" :key="department.id" :value="department.id">{{ department.display_name }}</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+          <div v-if="form.errors.department_id" class="text-red-500 text-sm">
+            {{ form.errors.department_id }}
+          </div>
         </div>
 
         <!-- Detail -->
@@ -93,7 +108,7 @@ const submit = () => {
         <!-- Message -->
         <div>
           <label class="block font-medium">Message</label>
-          <Textarea v-model="form.message" rows="3" class="w-full border rounded px-3 py-2"></textarea>
+          <Textarea v-model="form.message" rows="10" class="w-full border rounded px-3 py-2"></textarea>
         </div>
 
         <!-- Image -->

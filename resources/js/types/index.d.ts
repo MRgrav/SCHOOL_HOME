@@ -75,7 +75,8 @@ export interface Profile {
   role_id?: number | null;
   role?: Role | null;
   position?: string | null;
-  department?: string | null;
+  department_id?: number | null;
+  department?: Department | null;
   detail?: string | null;
   message?: string | null;
   created_at?: string;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Profile;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profiles = Profile::with('role')->latest()->get();
+        $profiles = Profile::with('role', 'department')->latest()->get();
         return Inertia::render('school-admin/Profiles/Index', compact('profiles'));
     }
 
@@ -26,7 +27,11 @@ class ProfileController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return Inertia::render('school-admin/Profiles/Create', compact('roles'));
+        $departments = Department::all();
+        return Inertia::render('school-admin/Profiles/Create', [
+            'roles' => $roles,
+            'departments' => $departments,
+        ]);
     }
 
     /**
@@ -39,7 +44,7 @@ class ProfileController extends Controller
             'image' => "nullable|file|mimes:pdf,jpg,jpeg,png|max:2048",
             'role_id' => 'nullable|exists:roles,id',
             'position' => 'nullable|string',
-            'department' => 'nullable|string',
+            'department_id' => 'nullable|exists:departments,id',
             'detail' => 'nullable|string',
             'message' => 'nullable|string',
         ]);
@@ -67,6 +72,7 @@ class ProfileController extends Controller
     {
         $profile = Profile::findOrFail($id);
         $profile->load('role');
+        $profile->load('department');
         return Inertia::render('school-admin/Profiles/Show', compact('profile'));
     }
 
@@ -77,12 +83,13 @@ class ProfileController extends Controller
     {
         $profile = Profile::findOrFail($id);
         $roles = Role::all();
+        $departments = Department::all();
 
         return Inertia::render('school-admin/Profiles/Edit', [
             'profile' => $profile,
-            'roles' => $roles
+            'roles' => $roles,
+            'departments' => $departments,
         ]);
-
     }
 
     /**
@@ -96,7 +103,7 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'role_id' => 'required|exists:roles,id',
             'position' => 'nullable|string|max:255',
-            'department' => 'nullable|string|max:255',
+            'department_id' => 'nullable|exists:departments,id',
             'detail' => 'nullable|string',
             'message' => 'nullable|string',
             'image' => "nullable|file|mimes:pdf,jpg,jpeg,png|max:2048",

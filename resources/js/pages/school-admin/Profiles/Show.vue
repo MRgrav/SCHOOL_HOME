@@ -73,9 +73,9 @@ const handleImageError = (event: Event) => {
             <h3 class="font-semibold">Position</h3>
             <p>{{ props.profile.position }}</p>
           </div>
-          <div v-if="props.profile.department">
+          <div v-if="props.profile.department_id">
             <h3 class="font-semibold">Department</h3>
-            <p>{{ props.profile.department }}</p>
+            <p>{{ props.profile.department?.display_name }}</p>
           </div>
           <div v-if="props.profile.detail">
             <h3 class="font-semibold">Detail</h3>
