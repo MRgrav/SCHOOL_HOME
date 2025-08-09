@@ -8,7 +8,7 @@ import NewsAndEvents from '@/components/Home/NewsAndEvents.vue';
 import AboutUs from '@/components/Home/AboutUs.vue';
 import Stats from '@/components/Home/Stats.vue';
 import Activities from '@/components/Home/Activities.vue';
-import { Profile } from '@/types';
+import { Post, Profile } from '@/types';
 
 /**
  * Props definition
@@ -17,6 +17,7 @@ import { Profile } from '@/types';
 interface Props {
   notifications: Notification[]
   profiles: Profile[]
+  posts: Post[]
 }
 const props = defineProps<Props>() // Make props reactive and type-safe.
 
@@ -42,7 +43,7 @@ const props = defineProps<Props>() // Make props reactive and type-safe.
                 </div>
             </div>
         </div>
-        <NewsAndEvents/>
+        <NewsAndEvents :posts="props.posts"/>
         <Stats/>
         <Activities/>
         <AboutUs/>

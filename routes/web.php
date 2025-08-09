@@ -10,6 +10,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Notification;
+use App\Models\Post;
 use App\Models\Profile;
 
 /*
@@ -59,9 +60,14 @@ Route::get('/', function () {
         }
     }
 
+    $posts = Post::orderBy('created_at', 'desc')
+        ->limit(6)
+        ->get();
+
     return Inertia::render('Home', [
         'notifications' => $notifications,
         'profiles' => $profiles,
+        'posts' => $posts
     ]);
 })->name('home');
 
@@ -104,6 +110,21 @@ Route::get('/profiles/{id}', function (int $id) {
     $profile->load('role');
     return Inertia::render('Profile', [
         'profile' => $profile,
+    ]);
+})->whereNumber('id');
+
+
+Route::get('/news-events', function () {
+    $posts = Post::orderBy('created_at', 'desc')
+        ->get();
+    return Inertia::render('NewsAndEvents/Index', [
+        'posts' => $posts,
+    ]);
+});
+Route::get('/news-events/{id}', function (int $id) {
+    $post = Post::findOrFail($id);
+    return Inertia::render('NewsAndEvents/Show', [
+        'post' => $post,
     ]);
 })->whereNumber('id');
 
