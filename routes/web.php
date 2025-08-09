@@ -7,11 +7,10 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\OnlineRegistrationController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Notification;
 use App\Models\Profile;
-use Illuminate\Validation\Rules\Numeric;
-use Nette\Utils\Strings;
 
 /*
 |--------------------------------------------------------------------------
@@ -201,15 +200,27 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
             ->name('school-admin.departments.show');
 
 
-        // Posts page
-        Route::get('/posts', function () {
-            return Inertia::render('school-admin/Posts');
-        })->name('school-admin.posts');
+        // Posts Admin page
+        Route::get('/posts', [PostController::class, 'index'])
+            ->name('school-admin.posts.index');
 
-        Route::resource('profiles', ProfileController::class);
+        Route::get('/posts/create', [PostController::class, 'create'])
+            ->name('school-admin.posts.create');
 
+        Route::post('/posts', [PostController::class, 'store'])
+            ->name('school-admin.posts.store');
 
-        // Route::resource('notifications', NotificationController::class);
+        Route::get('/posts/{id}/edit', [PostController::class, 'edit'])
+            ->name('school-admin.posts.edit');
+
+        Route::post('/posts/{id}/update', [PostController::class, 'update'])
+            ->name('school-admin.posts.update');
+
+        Route::delete('/posts/{id}', [PostController::class, 'destroy'])
+            ->name('school-admin.posts.delete');
+
+        Route::get('/posts/{id}', [PostController::class, 'show'])
+            ->name('school-admin.posts.show');
 
     });
 });
