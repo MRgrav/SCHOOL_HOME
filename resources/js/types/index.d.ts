@@ -92,4 +92,13 @@ export interface Department {
   updated_at?: string;
 }
 
+export interface Post {
+  id: number;
+  title: string;
+  image: string;
+  content?: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export type BreadcrumbItemType = BreadcrumbItem;
