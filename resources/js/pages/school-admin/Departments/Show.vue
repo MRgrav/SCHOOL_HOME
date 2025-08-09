@@ -55,7 +55,7 @@ function deleteProfile() {
         <!-- Right Column: Details -->
         <div class="md:col-span-2 space-y-4">
           <div>
-            <h3><span class="font-bold">Department Name:</span> {{ props.department.name }}</h3>
+            <h3><span class="font-bold">Department Name:</span> {{ props.department.display_name }}</h3>
           </div>
           <div v-if="props.department.description">
             <h4 class="font-semibold">Description</h4>
