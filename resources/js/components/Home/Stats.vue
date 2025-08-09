@@ -50,7 +50,7 @@ import { UserPen, GraduationCapIcon } from 'lucide-vue-next';
                         <UserPen class="size-20" />
                     </div>
                     <p class="text-center text-6xl font-bold text-purple-500">
-                        71+
+                        712+
                     </p>
                 </div>
                 <div>
@@ -82,7 +82,7 @@ import { UserPen, GraduationCapIcon } from 'lucide-vue-next';
                         <GraduationCapIcon class="size-20" />
                     </div>
                     <p class="text-center text-6xl font-bold text-purple-500">
-                        71+
+                        5,123+
                     </p>
                 </div>
             </div>
@@ -132,7 +132,7 @@ import { UserPen, GraduationCapIcon } from 'lucide-vue-next';
                         <UserPen class="size-20" />
                     </div>
                     <p class="text-center text-6xl font-bold text-purple-500">
-                        71+
+                        712+
                     </p>
                 </div>
                 <div>
@@ -155,7 +155,7 @@ import { UserPen, GraduationCapIcon } from 'lucide-vue-next';
                         <GraduationCapIcon class="size-20" />
                     </div>
                     <p class="text-center text-6xl font-bold text-purple-500">
-                        71+
+                        5,123+
                     </p>
                 </div>
                 <div>
