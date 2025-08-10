@@ -144,6 +144,10 @@ Route::get('/ncc', function () {
     return Inertia::render('NCC/Index');
 });
 
+Route::get('/admission-procedure', function () {
+    return Inertia::render('AdmissionProcedure/Index');
+});
+
 /*
 |--------------------------------------------------------------------------
 | School Admin Routes (Protected)
