@@ -156,6 +156,21 @@ Route::get('/transfer-certificate', function () {
     return Inertia::render('TransferCertificate/Index');
 });
 
+ Route::prefix('/laboratory')->group(function () {
+    Route::get('/computer', function () {
+        return Inertia::render('Laboratory/Computer/Index');
+    });
+    Route::get('/physics', function () {
+        return Inertia::render('Laboratory/Physics/Index');
+    });
+    Route::get('/chemistry', function () {
+        return Inertia::render('Laboratory/Chemistry/Index');
+    });
+    Route::get('/biology', function () {
+        return Inertia::render('Laboratory/Biology/Index');
+    });
+ });
+
 /*
 |--------------------------------------------------------------------------
 | School Admin Routes (Protected)
