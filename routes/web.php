@@ -22,23 +22,6 @@ use App\Models\Profile;
 |
 */
 
-// Online registration form (public)
-Route::controller(OnlineRegistrationController::class)->group(function () {
-    Route::get('/online-registration', 'create')
-        ->name('online-registration.create');
-
-    Route::get('/online-registration/{id}/pdf', 'downloadPdf')
-        ->name('online-registration.pdf')
-        ->whereNumber('id');
-
-    // Uncomment the following line to enable the test route for sending registration emails
-    // Route::get('/online-registration/mail', 'test')
-    //     ->name('online-registration.mail');
-
-    Route::post('/online-registration', 'store')
-        ->name('online-registration.store');
-});
-
 // Home page
 Route::get('/', function () {
     $notifications = Notification::orderBy('created_at', 'desc')
@@ -71,19 +54,218 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+
 /**
- * Faculty page
+ * Academic Section
  */
-Route::get('/faculty', function () {
+Route::get('/academic-calendar', function () {
+    return Inertia::render('AcademicCalendar');
+});
 
-    $departments = Department::all();
-    $profiles = Profile::all();
-    return Inertia::render('Faculty/Index', [
-        'departments' => $departments,
-        'profiles' => $profiles,
+Route::get('/holiday-list', function () {
+    return Inertia::render('HolidayList');
+});
+
+Route::get('/school-timing', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "School Timing"
     ]);
+});
 
-})->name('faculty');
+Route::get('/school-uniform', function () {
+    return Inertia::render('SchoolUniform');
+});
+
+Route::get('/list-of-books', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "List of Books"
+    ]);
+});
+
+Route::get('/subjects-offered', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Subjects Offered"
+    ]);
+});
+
+
+/**
+ * Non Academic Section
+ */
+Route::get('/news-events', function () {
+    $posts = Post::orderBy('created_at', 'desc')
+        ->get();
+    return Inertia::render('NewsAndEvents/Index', [
+        'posts' => $posts,
+    ]);
+});
+Route::get('/news-events/{id}', function (int $id) {
+    $post = Post::findOrFail($id);
+    return Inertia::render('NewsAndEvents/Show', [
+        'post' => $post,
+    ]);
+})->whereNumber('id');
+
+Route::get('/sports-calendar', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Sports Calendar"
+    ]);
+});
+
+Route::get('/ncc', function () {
+    return Inertia::render('NCC/Index');
+});
+
+
+/**
+ * Admission Section
+ */
+// Online registration form (public)
+Route::controller(OnlineRegistrationController::class)->group(function () {
+    Route::get('/online-registration', 'create')
+        ->name('online-registration.create');
+
+    Route::get('/online-registration/{id}/pdf', 'downloadPdf')
+        ->name('online-registration.pdf')
+        ->whereNumber('id');
+
+    // Uncomment the following line to enable the test route for sending registration emails
+    // Route::get('/online-registration/mail', 'test')
+    //     ->name('online-registration.mail');
+
+    Route::post('/online-registration', 'store')
+        ->name('online-registration.store');
+});
+
+Route::get('/admission-procedure', function () {
+    return Inertia::render('AdmissionProcedure/Index');
+});
+
+Route::get('/fees-structure', function () {
+    return Inertia::render('FeesStructure/Index');
+});
+
+Route::get('/testimonials', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Testimonials"
+    ]);
+});
+
+Route::get('/office-remittances', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Office Remittances"
+    ]);
+});
+
+Route::get('/transfer-certificate', function () {
+    return Inertia::render('TransferCertificate/Index');
+});
+
+Route::get('/orientation-program', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Orientation Program"
+    ]);
+});
+
+Route::get('/age-limits', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Age Limits"
+    ]);
+});
+
+
+/**
+ * Infrastructure Section
+ */
+
+Route::prefix('/laboratory')->group(function () {
+    Route::get('/computer', function () {
+        return Inertia::render('Laboratory/Computer/Index');
+    });
+    Route::get('/physics', function () {
+        return Inertia::render('Laboratory/Physics/Index');
+    });
+    Route::get('/chemistry', function () {
+        return Inertia::render('Laboratory/Chemistry/Index');
+    });
+    Route::get('/biology', function () {
+        return Inertia::render('Laboratory/Biology/Index');
+    });
+});
+
+Route::get('/classrooms', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Classrooms"
+    ]);
+});
+
+Route::get('/library', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Library"
+    ]);
+});
+
+Route::get('/playground-sports', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Playground Sport"
+    ]);
+});
+
+Route::get('/creative-performing-arts', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Creative Performing Arts"
+    ]);
+});
+
+Route::get('/medical-care', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Medical Care"
+    ]);
+});
+
+
+/**
+ * Activities Section
+ */
+ Route::prefix('/house')->group(function () {
+    Route::get('/gandhi', function () {
+        return Inertia::render('CommingSoon',[
+            'title' => "Gandhi House"
+        ]);
+    });
+    Route::get('/nehru', function () {
+        return Inertia::render('CommingSoon',[
+            'title' => "Nehru House"
+        ]);
+    });
+    Route::get('/subhash', function () {
+        return Inertia::render('CommingSoon',[
+            'title' => "Subhash House"
+        ]);
+    });
+    Route::get('/tagore', function () {
+        return Inertia::render('CommingSoon',[
+            'title' => "Tagore House"
+        ]);
+    });
+ });
+
+Route::get('/sports', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Sports"
+    ]);
+});
+
+
+/**
+ * Achievements Section
+ */
+Route::get('/academic-achievements', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Academic Achievements"
+    ]);
+});
+
 
 /** 
  * Notifications page
@@ -104,7 +286,23 @@ Route::get('/notifications/{notification}', function (Notification $notification
 })->name('notifications.show');
 
 
+/** 
+ * More Public Pages Not Under Navlinks
+ */
 
+// Faculty page
+Route::get('/faculty', function () {
+
+    $departments = Department::all();
+    $profiles = Profile::all();
+    return Inertia::render('Faculty/Index', [
+        'departments' => $departments,
+        'profiles' => $profiles,
+    ]);
+
+})->name('faculty');
+
+// Profile page of people
 Route::get('/profiles/{id}', function (int $id) {
     $profile = Profile::findOrFail($id);
     $profile->load('role');
@@ -114,62 +312,41 @@ Route::get('/profiles/{id}', function (int $id) {
 })->whereNumber('id');
 
 
-Route::get('/news-events', function () {
-    $posts = Post::orderBy('created_at', 'desc')
-        ->get();
-    return Inertia::render('NewsAndEvents/Index', [
-        'posts' => $posts,
+Route::get('/about', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "About Us"
     ]);
 });
-Route::get('/news-events/{id}', function (int $id) {
-    $post = Post::findOrFail($id);
-    return Inertia::render('NewsAndEvents/Show', [
-        'post' => $post,
+
+Route::get('/magazine', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Magazine"
     ]);
-})->whereNumber('id');
-
-Route::get('/academic-calendar', function () {
-    return Inertia::render('AcademicCalendar');
 });
 
-Route::get('/holiday-list', function () {
-    return Inertia::render('HolidayList');
+Route::get('/staff', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Staff"
+    ]);
 });
 
-Route::get('/school-uniform', function () {
-    return Inertia::render('SchoolUniform');
+Route::get('/rules-regulations', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Rules Regulations"
+    ]);
 });
 
-Route::get('/ncc', function () {
-    return Inertia::render('NCC/Index');
+Route::get('/results', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Results"
+    ]);
 });
 
-Route::get('/admission-procedure', function () {
-    return Inertia::render('AdmissionProcedure/Index');
+Route::get('/career', function () {
+    return Inertia::render('CommingSoon',[
+        'title' => "Career"
+    ]);
 });
-
-Route::get('/fees-structure', function () {
-    return Inertia::render('FeesStructure/Index');
-});
-
-Route::get('/transfer-certificate', function () {
-    return Inertia::render('TransferCertificate/Index');
-});
-
- Route::prefix('/laboratory')->group(function () {
-    Route::get('/computer', function () {
-        return Inertia::render('Laboratory/Computer/Index');
-    });
-    Route::get('/physics', function () {
-        return Inertia::render('Laboratory/Physics/Index');
-    });
-    Route::get('/chemistry', function () {
-        return Inertia::render('Laboratory/Chemistry/Index');
-    });
-    Route::get('/biology', function () {
-        return Inertia::render('Laboratory/Biology/Index');
-    });
- });
 
 /*
 |--------------------------------------------------------------------------
