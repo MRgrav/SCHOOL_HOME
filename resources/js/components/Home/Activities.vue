@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import nccImage from '@/../../resources/images/ncc.jpeg';
+import cultureImage from '@/../../resources/images/culture.jpeg';
+import sportImage from '@/../../resources/images/sport.jpeg';
+
 
 </script>
 <template>
@@ -18,9 +22,9 @@
                 </p>
             </div>
             <div class="flex flex-col">
-                <div class=" h-100 border border-blue-200 bg-cover bg-center bg-no-repeat border-r-4 border-b-4 transform transition duration-300 hover:scale-101 relative"
-                    :style="{ backgroundImage: `url('/storage/uploads/hero-1.jpeg')` }">
-                </div>
+                <!-- <div > -->
+                    <img class="h-80 border border-blue-200 bg-cover object-cover bg-center bg-no-repeat border-r-4 border-b-4 transform transition duration-300 hover:scale-101 relative" :src="nccImage" alt="">
+                <!-- </div> -->
             </div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 py-10">
@@ -34,9 +38,9 @@
                 </p>
             </div>
             <div class="flex flex-col">
-                <div class=" h-100 border border-blue-200 bg-cover bg-center bg-no-repeat border-r-4 border-b-4 transform transition duration-300 hover:scale-101 relative"
-                    :style="{ backgroundImage: `url('/storage/uploads/hero-1.jpeg')` }">
-                </div>
+                <!-- <div > -->
+                    <img class="h-80 border border-blue-200 bg-cover object-cover bg-center bg-no-repeat border-r-4 border-b-4 transform transition duration-300 hover:scale-101 relative" :src="sportImage" alt="">
+                <!-- </div> -->
             </div>
             <div class="hidden lg:flex flex-col justify-center">
                 <h3
@@ -60,9 +64,9 @@
                 </p>
             </div>
             <div class="flex flex-col">
-                <div class=" h-100 border border-blue-200 bg-cover bg-center bg-no-repeat border-r-4 border-b-4 transform transition duration-300 hover:scale-101 relative"
-                    :style="{ backgroundImage: `url('/storage/uploads/hero-1.jpeg')` }">
-                </div>
+                <!-- <div > -->
+                    <img class="h-80 border border-blue-200 bg-cover object-cover bg-center bg-no-repeat border-r-4 border-b-4 transform transition duration-300 hover:scale-101 relative" :src="cultureImage" alt="">
+                <!-- </div> -->
             </div>
         </div>
     </div>
