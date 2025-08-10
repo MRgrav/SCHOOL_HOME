@@ -148,6 +148,10 @@ Route::get('/admission-procedure', function () {
     return Inertia::render('AdmissionProcedure/Index');
 });
 
+Route::get('/fees-structure', function () {
+    return Inertia::render('FeesStructure/Index');
+});
+
 /*
 |--------------------------------------------------------------------------
 | School Admin Routes (Protected)
