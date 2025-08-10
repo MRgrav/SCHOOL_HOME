@@ -7,8 +7,8 @@ import { MapPin, Phone, Mail } from 'lucide-vue-next';
 // Quick navigation items
 const QuickLinksItems: NavItem[] = [
     {
-        title: 'About Us',
-        href: '/about',
+        title: 'Online Registration',
+        href: '/online-registration',
     },
     {
         title: 'School Magazine',
@@ -19,13 +19,13 @@ const QuickLinksItems: NavItem[] = [
         href: '/news-events',
     },
     {
-        title: 'Admission',
-        href: '/admission',
+        title: 'About Us',
+        href: '/about',
     },
-    {
-        title: 'Activities',
-        href: '/activities',
-    },
+    // {
+    //     title: 'Activities',
+    //     href: '/activities',
+    // },
     {
         title: 'Faculty',
         href: '/faculty',
@@ -47,8 +47,8 @@ const InformationItems: NavItem[] = [
         href: '/transfer-certificate',
     },
     {
-        title: 'Notification',
-        href: '/notification',
+        title: 'Notifications',
+        href: '/notifications',
     },
     {
         title: 'Fees Structure',
@@ -122,8 +122,8 @@ const AddressItems: NavItem[] = [
                 <a href="https://www.deolang.com/" target="_blank" class="text-blue-800 font-semibold">Powered by DeoLang</a>
             </div>
             <div class="flex flex-col items-center md:items-end">
-                <span class="text-right text-gray-500">Today's visitors: 17</span>
-                <span class="text-right text-gray-500">Total visitors : 1,188</span>
+                <!-- <span class="text-right text-gray-500">Today's visitors: 17</span> -->
+                <!-- <span class="text-right text-gray-500">Total visitors : 1,188</span> -->
             </div>
         </div>
     </div>
