@@ -58,7 +58,7 @@ const AcademicItems: NavItem[] = [
 const NonAcademicItems: NavItem[] = [
     {
         title: 'News & Events',
-        href: '/news-and-events',
+        href: '/news-events',
     },
     {
         title: 'Calendar for Sports/Co-curricular activities',
