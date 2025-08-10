@@ -128,6 +128,9 @@ Route::get('/news-events/{id}', function (int $id) {
     ]);
 })->whereNumber('id');
 
+Route::get('/academic-calendar', function () {
+    return Inertia::render('AcademicCalendar');
+});
 /*
 |--------------------------------------------------------------------------
 | School Admin Routes (Protected)
