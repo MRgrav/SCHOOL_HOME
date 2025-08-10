@@ -2,6 +2,7 @@
 import nccImage from '@/../../resources/images/ncc.jpeg';
 import cultureImage from '@/../../resources/images/culture.jpeg';
 import sportImage from '@/../../resources/images/sport.jpeg';
+import { Link } from '@inertiajs/vue3';
 
 
 </script>
@@ -21,11 +22,11 @@ import sportImage from '@/../../resources/images/sport.jpeg';
                     welcoming environment for all.
                 </p>
             </div>
-            <div class="flex flex-col">
+            <Link :href="'/ncc'" class="flex flex-col">
                 <!-- <div > -->
                     <img class="h-80 border border-blue-200 bg-cover object-cover bg-center bg-no-repeat border-r-4 border-b-4 transform transition duration-300 hover:scale-101 relative" :src="nccImage" alt="">
                 <!-- </div> -->
-            </div>
+            </Link>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 py-10">
             <div class="flex flex-col justify-center lg:hidden">

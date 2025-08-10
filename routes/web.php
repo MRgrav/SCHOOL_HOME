@@ -140,6 +140,10 @@ Route::get('/school-uniform', function () {
     return Inertia::render('SchoolUniform');
 });
 
+Route::get('/ncc', function () {
+    return Inertia::render('NCC/Index');
+});
+
 /*
 |--------------------------------------------------------------------------
 | School Admin Routes (Protected)
