@@ -136,6 +136,10 @@ Route::get('/holiday-list', function () {
     return Inertia::render('HolidayList');
 });
 
+Route::get('/school-uniform', function () {
+    return Inertia::render('SchoolUniform');
+});
+
 /*
 |--------------------------------------------------------------------------
 | School Admin Routes (Protected)
