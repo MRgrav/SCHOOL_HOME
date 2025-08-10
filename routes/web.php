@@ -131,6 +131,11 @@ Route::get('/news-events/{id}', function (int $id) {
 Route::get('/academic-calendar', function () {
     return Inertia::render('AcademicCalendar');
 });
+
+Route::get('/holiday-list', function () {
+    return Inertia::render('HolidayList');
+});
+
 /*
 |--------------------------------------------------------------------------
 | School Admin Routes (Protected)
