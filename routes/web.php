@@ -152,6 +152,10 @@ Route::get('/fees-structure', function () {
     return Inertia::render('FeesStructure/Index');
 });
 
+Route::get('/transfer-certificate', function () {
+    return Inertia::render('TransferCertificate/Index');
+});
+
 /*
 |--------------------------------------------------------------------------
 | School Admin Routes (Protected)
