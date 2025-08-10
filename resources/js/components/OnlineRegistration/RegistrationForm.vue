@@ -4,7 +4,6 @@ import Input from '../ui/input/Input.vue'
 import Label from '../ui/label/Label.vue';
 import { ref } from 'vue';
 import FormSuccess from './FormSuccess.vue';
-
 import {
   Select,
   SelectContent,
@@ -13,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
+import Loader from './Loader.vue';
 
 // Online Registration Form Object
 const form = useForm({
@@ -55,6 +55,7 @@ const form = useForm({
   last_exam_percentage: '',
 
   // parents infromation
+  parents_category: '',
   father_name: '',
   father_occupation: '',
   father_phone: '',
@@ -89,24 +90,29 @@ const form = useForm({
 
 // initial value of form submit
 const success = ref(false);
+const submitting = ref(false);
 // ID of the submitted form, used to download PDF
 const submittedId = ref<number | null>(null);
 
 // Submit the form using Inertia js Form helper
 const submitForm = () => {
+  submitting.value = true;
   form.post(route('online-registration.store'),{
     forceFormData: true,
     onSuccess: (data) => {
-      success.value = true
-      form.reset()
+      success.value = true;
+      form.reset();
       // Set the submitted ID from the flash data
       submittedId.value = (data.props.flash && (data.props.flash as any).data.id) ?? null;
-      console.log('Form submitted successfully', submittedId.value)
-    }
+    },
+    onFinish: () => {
+      submitting.value = false;
+    },
   })
 }
 </script>
 <template>
+  <Loader :open="submitting"/>
   <!-- Show Success messsage after form submit with PDF download link -->
   <FormSuccess :show="success" @close="success = false" :id="submittedId ?? undefined"/>
 
@@ -140,7 +146,7 @@ const submitForm = () => {
           <div class="text-sm text-red-500" v-if="form.errors.applicant_name">{{ form.errors.applicant_name }}</div>
         </div>
         <div class="space-y-1">
-          <Label for="dob">Date of Birth: *</Label>
+          <Label for="dob">Date of Birth ( MM-DD-YYYY ): *</Label>
           <Input type="date" id="dob" v-model="form.dob" required/>
           <div class="text-sm text-red-500" v-if="form.errors.dob">{{ form.errors.dob }}</div>
         </div>
@@ -323,7 +329,7 @@ const submitForm = () => {
           <div class="text-sm text-red-500" v-if="form.errors.admission_sought_for_class">{{ form.errors.admission_sought_for_class }}</div>
         </div>
         <div class="space-y-1">
-          <Label for="admission_sought_date">Admission sought for the Year: *</Label>
+          <Label for="admission_sought_date">Admission sought for the Year ( MM-DD-YYYY ): *</Label>
           <Input type="date" id="admission_sought_date" v-model="form.admission_sought_date" required/>
           <div class="text-sm text-red-500" v-if="form.errors.admission_sought_date">{{ form.errors.admission_sought_date }}</div>
         </div>
@@ -422,6 +428,22 @@ const submitForm = () => {
     <div class="space-y-4">
       <h3  class="text-lg font-semibold text-white bg-sky-400 p-2">PARENT’S INFORMATION</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="space-y-1">
+          <Label for="category">Category: *</Label>
+            <Select id="category" v-model="form.parents_category" required>
+            <SelectTrigger class="form-select w-full">
+              <SelectValue placeholder="-- Select --" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="CIVILIAN">Civilian</SelectItem>
+                <SelectItem value="DEFENCE">Defence</SelectItem>
+                <SelectItem value="RETIRED DEFENCE">Retired Defence</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <div class="text-sm text-red-500" v-if="form.errors.parents_category">{{ form.errors.parents_category }}</div>
+        </div>
         <div class="space-y-1">
           <Label for="father_name">Father's Name: *</Label>
           <Input id="father_name" v-model="form.father_name" placeholder="FATHER'S NAME" required/>
@@ -586,4 +608,7 @@ const submitForm = () => {
       </button>
     </div>
   </form>
+
+  <!-- Show Success messsage after form submit with PDF download link -->
+  <FormSuccess :show="success" @close="success = false" :id="submittedId ?? undefined"/>
 </template>

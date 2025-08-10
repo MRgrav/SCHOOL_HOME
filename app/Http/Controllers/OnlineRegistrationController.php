@@ -77,6 +77,7 @@ class OnlineRegistrationController extends Controller
             "last_exam_percentage" => "required|integer|min:0|max:100",
 
             // PARENT’S INFORMATION
+            "parents_category" => "required|in:CIVILIAN,DEFENCE,RETIRED DEFENCE",
             "father_name" => "required|string|max:255",
             "father_occupation" => "required|string|max:255",
             "father_phone" => "required|integer|digits:10",

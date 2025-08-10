@@ -40,7 +40,7 @@ const categories: Record<string, string[]> = {
     'subject_7', 'subject_7_marks', 'last_exam_percentage'
   ],
   "Parent’s Information": [
-    'father_name', 'father_occupation', 'father_phone',
+    'parents_category', 'father_name', 'father_occupation', 'father_phone',
     'mother_name', 'mother_occupation', 'mother_phone', 'annual_income'
   ],
   "Current Address": [

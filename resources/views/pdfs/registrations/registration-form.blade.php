@@ -197,6 +197,7 @@
         <h3 class="section-title">Parent’s Information</h3>
         <table>
             @foreach ([
+            'Parent\'s Category ' => $registration->parents_category,
             'Father\'s Name' => $registration->father_name,
             'Father\'s Occupation' => $registration->father_occupation,
             'Father\'s Phone' => $registration->father_phone,
