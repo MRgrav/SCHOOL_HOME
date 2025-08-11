@@ -62,7 +62,7 @@ class ProfileController extends Controller
 
         Profile::create($data);
 
-        return redirect()->route('profiles.index')->with('success', 'Profile created.');
+        return redirect()->route('school-admin.profiles.index')->with('success', 'Profile created.');
     }
 
     /**
@@ -136,6 +136,6 @@ class ProfileController extends Controller
     {
         $profile = Profile::findOrFail($id);
         $profile->delete();
-        return redirect()->route('profiles.index')->with('success', 'Profile deleted.');
+        return redirect()->route('school-admin.profiles.index')->with('success', 'Profile deleted.');
     }
 }
