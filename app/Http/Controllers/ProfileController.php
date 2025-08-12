@@ -41,7 +41,7 @@ class ProfileController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
-            'image' => "nullable|file|mimes:pdf,jpg,jpeg,png|max:2048",
+            'image' => "nullable|file|mimes:pdf,jpg,jpeg,png,avif,webp|max:2000",
             'role_id' => 'nullable|exists:roles,id',
             'position' => 'nullable|string',
             'department_id' => 'nullable|exists:departments,id',
@@ -106,7 +106,7 @@ class ProfileController extends Controller
             'department_id' => 'nullable|exists:departments,id',
             'detail' => 'nullable|string',
             'message' => 'nullable|string',
-            'image' => "nullable|file|mimes:pdf,jpg,jpeg,png|max:2048",
+            'image' => "nullable|file|mimes:pdf,jpg,jpeg,png,avif,webp|max:2000",
         ]);
 
         // Only update if a new image is uploaded

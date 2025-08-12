@@ -35,7 +35,7 @@ class PostController extends Controller
     {
         $data = $request->validate([
             'title' => 'required',
-            'image' => "required|file|mimes:pdf,jpg,jpeg,png|max:2048",
+            'image' => "required|file|mimes:pdf,jpg,jpeg,png,avif,webp|max:2000",
             'content' => 'nullable|string',
         ]);
 
@@ -82,7 +82,7 @@ class PostController extends Controller
 
         $validated = $request->validate([
             'title' => 'required',
-            'image' => "nullable|file|mimes:pdf,jpg,jpeg,png|max:2048",
+            'image' => "nullable|file|mimes:pdf,jpg,jpeg,png,avif,webp|max:2000",
             'content' => 'nullable|string',
         ]);
 
